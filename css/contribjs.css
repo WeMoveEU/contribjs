@@ -9,7 +9,10 @@
   margin-left: 27%;
 }
 .crm-container .crm-section.other_amount-section {
-  display: hidden;
+  display: none;
+}
+.crm-container .crm-section.is_recur-section .content {
+  margin-left: 2%;
 }
 
 #crm-container.crm-public .label,
