@@ -14,7 +14,7 @@ if (da > 0) {
 /* IBAN magic */
 
 function isIBANConverted(formId) {
-  var toConvert = ['11', '14', '18'];
+  var toConvert = ['14'];
   return toConvert.indexOf(formId) >= 0;
 }
 
@@ -27,6 +27,26 @@ function addField(name, label) {
   $iban.before(field);
 }
 
+function mod97(digits) {
+  var value = 0;
+  for (var i = 0; i < digits.length; ++i)
+    value = (10 * value + parseInt(digits.charAt(i))) % 97;
+  return value;
+}
+
+function genIBAN() {
+  var bank_code = jQuery('#bank_code').val(),
+      branch_code = jQuery('#branch_code').val(),
+      check_digits = jQuery('#check_digits').val(),
+      account = jQuery('#account').val();
+
+  var bban = '' + bank_code + branch_code + check_digits + account;
+  var iban_prefix = '181500';
+  var checksum = (98 - mod97(bban + iban_prefix)).toString();
+  while (checksum.length < 2) checksum = '0' + checksum;
+  return 'SP' + checksum + bban;
+}
+
 var formId = getParam('id');
 if (isIBANConverted(formId)) {
   var $iban = jQuery('#bank_account_number');
@@ -35,7 +55,7 @@ if (isIBANConverted(formId)) {
   addField('check_digits', "Check digits");
   addField('account', "Account number");
   jQuery('#bank_code, #branch_code, #check_digits, #account').on('change', function(e) {
-    $iban.val("Hello");
+    $iban.val(genIBAN());
   });
 }
 
