@@ -1,4 +1,3 @@
-jQuery('.crm-section.is_recur-section > .label').remove();
 
 jQuery('.price-set-row input').on('change', function(e) {
   var $other = jQuery('.crm-container .crm-section.other_amount-section'); 

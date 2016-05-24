@@ -1,6 +1,12 @@
 .region-content {
   font-family: 'Open Sans', sans-serif;
 }
+#page-header {
+  display: none;
+}
+legend {
+  margin: 10px 0;
+}
 
 .crm-container .crm-section .label {
   width: 25%;
@@ -10,9 +16,6 @@
 }
 .crm-container .crm-section.other_amount-section {
   display: none;
-}
-.crm-container .crm-section.is_recur-section .content {
-  margin-left: 2%;
 }
 
 #crm-container.crm-public .label,
