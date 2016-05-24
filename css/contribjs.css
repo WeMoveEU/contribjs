@@ -1,3 +1,7 @@
-legend {
-    font-style: italic; /* just for test */
+.region-content {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.crm-container .crm-section .label {
+  width: 25%;
 }
