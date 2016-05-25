@@ -1,3 +1,32 @@
-legend {
-    font-style: italic; /* just for test */
+.region-content {
+  font-family: 'Open Sans', sans-serif;
 }
+#page-header {
+  display: none;
+}
+legend {
+  margin: 10px 0;
+}
+
+.crm-container .crm-section .label {
+  width: 25%;
+}
+.crm-container .crm-section .content {
+  margin-left: 27%;
+}
+.crm-container .crm-section.other_amount-section {
+  display: none;
+}
+
+#crm-container.crm-public .label,
+#crm-container.crm-public .content {
+  padding: .2em .6em;
+  line-height: 1.8em;
+}
+#crm-container.crm-public .price-set-row {
+  display: inline-block;
+}
+#crm-container.crm-public .price-set-row input {
+  margin: 0 4px;
+}
+
