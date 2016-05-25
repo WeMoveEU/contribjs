@@ -17,6 +17,9 @@ legend {
 .crm-container .crm-section.other_amount-section {
   display: none;
 }
+.crm-container .crm-section.is_recur-section .label {
+  display: none;
+}
 
 #crm-container.crm-public .label,
 #crm-container.crm-public .content {
@@ -30,3 +33,11 @@ legend {
   margin: 0 4px;
 }
 
+@media screen and (max-width:767px) {
+  .crm-container .crm-section .label {
+    float: none;
+  }
+  .crm-container .crm-section .content {
+    margin-left: auto;
+  }
+}
