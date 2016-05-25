@@ -24,34 +24,28 @@ function isConvertedToMonthly() {
   return true;
 }
 
-function toggleMonthlyPayment() {
-  var freq = jQuery('#frequency_unit').val();
+function updateMonthlyPayment() {
   var $montlyInfo = jQuery('#monthlyInfo');
-  if (freq === 'day' || freq === 'week') {
-    var amount = jQuery('.price-set-row input').filter(':checked').attr('data-amount');
-    if (amount) {
-      amount = parseFloat(amount);
-    } else {
-      amount = parseFloat(jQuery('.other_amount-section input').val());
-    }
-    if (freq === 'day') {
-      var monthlyValue = amount * 30;
-    } else {
-      var monthlyValue = amount * 4;
-    }
-    jQuery('#monthlyValue').text(monthlyValue);
-    $monthlyInfo.show();
+  var amount = jQuery('.price-set-row input').filter(':checked').attr('data-amount');
+  if (amount) {
+    amount = parseFloat(amount);
   } else {
-    $monthlyInfo.hide();
+    amount = parseFloat(jQuery('.other_amount-section input').val());
   }
+  var monthlyValue = amount * 4;
+  jQuery('#monthlyValue').text(monthlyValue);
 }
 
 if (isConvertedToMonthly()) {
   var $monthlyInfo = jQuery('<span id="monthlyInfo">Per month: <span id="monthlyValue"></span></span>');
+  jQuery('#is_recur').click().hide();
+  jQuery('label[for=is_recur]').hide();
   jQuery('#recurHelp').append($monthlyInfo);
-  jQuery('.price-set-row input, .other_amount-section input, #frequency_unit').on('change', function(e) {
-    toggleMonthlyPayment();
+  //Remove "every month" text node
+  jQuery('.is_recur-section .content').contents().filter(function(){return this.nodeType == 3;}).remove();
+  jQuery('.price-set-row input, .other_amount-section input').on('change', function(e) {
+    updateMonthlyPayment();
   });
-  toggleMonthlyPayment();
+  updateMonthlyPayment();
 }
 
