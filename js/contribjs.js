@@ -32,14 +32,18 @@ function updateMonthlyPayment() {
   } else {
     amount = parseFloat(jQuery('.other_amount-section input').val());
   }
-  var monthlyValue = amount * 4;
+  var monthlyValue = amount * 4.3;
+  if (isNaN(monthlyValue)) monthlyValue = '';
   jQuery('#monthlyValue').text(monthlyValue);
 }
 
 if (isConvertedToMonthly()) {
-  var $monthlyInfo = jQuery('<div class="crm-section"><div class="label"></div><div class="content" id="monthlyInfo">Per month: <span id="monthlyValue"></span><div class="clear"></div></div>');
+  var $monthlyInfo = jQuery('<div class="crm-section"><div class="label"></div><div class="content" id="monthlyInfo">You will contribute € <span id="monthlyValue"></span> per month</div><div class="clear"></div></div>');
   jQuery('.other_amount-section').after($monthlyInfo);
-  jQuery('.price-set-row input, .other_amount-section input').on('change', function(e) {
+  jQuery('.price-set-row input').on('change', function(e) {
+    updateMonthlyPayment();
+  });
+  jQuery('.other_amount-section input').on('keyup', function(e) {
     updateMonthlyPayment();
   });
   updateMonthlyPayment();
