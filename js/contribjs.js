@@ -37,12 +37,8 @@ function updateMonthlyPayment() {
 }
 
 if (isConvertedToMonthly()) {
-  var $monthlyInfo = jQuery('<span id="monthlyInfo">Per month: <span id="monthlyValue"></span></span>');
-  jQuery('#is_recur').click().hide();
-  jQuery('label[for=is_recur]').hide();
-  jQuery('#recurHelp').append($monthlyInfo);
-  //Remove "every month" text node
-  jQuery('.is_recur-section .content').contents().filter(function(){return this.nodeType == 3;}).remove();
+  var $monthlyInfo = jQuery('<div class="crm-section"><div class="label"></div><div class="content" id="monthlyInfo">Per month: <span id="monthlyValue"></span><div class="clear"></div></div>');
+  jQuery('.other_amount-section').after($monthlyInfo);
   jQuery('.price-set-row input, .other_amount-section input').on('change', function(e) {
     updateMonthlyPayment();
   });
