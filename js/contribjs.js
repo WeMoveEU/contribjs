@@ -25,7 +25,7 @@ jQuery('.price-set-row input').on('change', function(e) {
 /* Convert daily/weekly donations to monthly donations */
 
 function isConvertedToMonthly() {
-  return getParam('id') == 19;
+  return getParam('id') == 24;
 }
 
 function getMonthlyValue() {
