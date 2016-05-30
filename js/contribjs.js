@@ -62,3 +62,7 @@ if (isConvertedToMonthly()) {
   });
 }
 
+/* Converting comma to dot in other amount field */
+jQuery(".other_amount-content input[name*=price]").change(function(e) {
+  jQuery(this).val(jQuery(this).val().replace(/,/g,"."));
+});
