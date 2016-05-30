@@ -1,6 +1,10 @@
+function getParam(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
+
 // set default amount based on param donation_amount in url
 var name = 'donation_amount';
-var da = decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+var da = getParam(name);
 if (da > 0) {
   da = da.replace('.', '\\.');
   jQuery(".price-set-row input[data-amount="+da+"]").prop("checked", true).click();
@@ -21,7 +25,7 @@ jQuery('.price-set-row input').on('change', function(e) {
 /* Convert daily/weekly donations to monthly donations */
 
 function isConvertedToMonthly() {
-  return window.pseudoweekly;
+  return getParam('id') == 19;
 }
 
 function getMonthlyValue() {
