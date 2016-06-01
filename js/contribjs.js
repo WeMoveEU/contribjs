@@ -133,6 +133,7 @@ var formId = getParam('id');
 if (isIBANConverted(formId)) {
   var country = 'ES';
   var $iban = jQuery('#bank_account_number');
+  $iban.before(switch_section);
   addField('bank_code', "Bank code");
   addField('branch_code', "Branch code");
   addField('check_digits', "Check digits");
