@@ -146,7 +146,7 @@ function enableNationalForm(country) {
   var fieldSelect = '';
   for (field_id in natFields[country]) {
     addField(field_id, natFields[country][field_id]);
-    fieldSelect.push('.' + field_id + '-section, ');
+    fieldSelect += '.' + field_id + '-section, ';
   }
 
   var $iban = jQuery('#bank_account_number');
