@@ -11,7 +11,7 @@ legend {
   margin: 10px 0;
 }
 
-#intro_text.intro_text-section {
+#crm-container #intro_text.intro_text-section {
   margin-bottom: 1em;
 }
 .crm-container .crm-section .label {
