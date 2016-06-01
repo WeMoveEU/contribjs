@@ -146,14 +146,15 @@ function enableNationalForm(country) {
   var fieldSelect = '';
   for (field_id in natFields[country]) {
     addField(field_id, natFields[country][field_id]);
-    fieldSelect.push('.' + fieldId + '-section, ');
+    fieldSelect.push('.' + field_id + '-section, ');
   }
 
+  var $iban = jQuery('#bank_account_number');
   jQuery('input[name=transfer_scheme]').on('change', function (e) {
     jQuery(fieldSelect + '.bank_account_number-section, .bank_identification_number-section').toggle();
+    $iban.focus();
   });
 
-  var $iban = jQuery('#bank_account_number');
   jQuery('#bank_code, #branch_code, #check_digits, #account').on('change', function(e) {
     $iban.val(genIBAN(country));
   });
