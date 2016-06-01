@@ -75,6 +75,19 @@ jQuery(".other_amount-content input[name*=price]").change(function(e) {
 
 /* IBAN magic */
 
+var natFields = {
+  ES: {
+    'bank_code': "Bank code",
+    'branch_code': "Branch code",
+    'check_digits': "Check digits",
+    'account': "Account number"
+  },
+  DE: {
+    'bank_code': "Bank code",
+    'account': "Account number"
+  }
+}
+
 function isIBANConverted(formId) {
   var toConvert = ['19'];
   return toConvert.indexOf(formId) >= 0;
@@ -113,12 +126,11 @@ function mod97(digits) {
 }
 
 function getBBAN(country) {
-  var bank_code = jQuery('#bank_code').val(),
-      branch_code = jQuery('#branch_code').val(),
-      check_digits = jQuery('#check_digits').val(),
-      account = jQuery('#account').val();
-
-  return '' + bank_code + branch_code + check_digits + account;
+  var bban = '';
+  for (field_id in natFields[country]) {
+    bban += jQuery('#' + field_id).val();
+  }
+  return bban;
 }
 
 function genIBAN(country) {
@@ -131,12 +143,14 @@ function genIBAN(country) {
 
 function enableNationalForm(country) {
   jQuery('.account_holder-section').before(switch_section);
-  addField('bank_code', "Bank code");
-  addField('branch_code', "Branch code");
-  addField('check_digits', "Check digits");
-  addField('account', "Account number");
+  var fieldSelect = '';
+  for (field_id in natFields[country]) {
+    addField(field_id, natFields[country][field_id]);
+    fieldSelect.push('.' + fieldId + '-section, ');
+  }
+
   jQuery('input[name=transfer_scheme]').on('change', function (e) {
-    jQuery('.bank_code-section, .branch_code-section, .check_digits-section, .account-section, .bank_account_number-section, .bank_identification_number-section').toggle();
+    jQuery(fieldSelect + '.bank_account_number-section, .bank_identification_number-section').toggle();
   });
 
   var $iban = jQuery('#bank_account_number');
