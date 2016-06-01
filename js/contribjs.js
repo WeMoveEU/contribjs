@@ -80,7 +80,9 @@ function isIBANConverted(formId) {
   return toConvert.indexOf(formId) >= 0;
 }
 
-var field_tpl = '<div class="crm-section @@name@@-section"><div class="label"><label for="@@name@@">@@label@@</label><span class="crm-marker" title="This field is required.">*</span></div><div class="content"><input size="34" maxlength="34" autocomplete="off" name="@@name@@" id="@@name@@" class="crm-form-text" type="text"> <img style="display: none;" id="bic_busy" src="/sites/all/modules/civicrm/i/loading.gif" height="12"></div><div class="clear"></div></div>'
+var switch_section = '<div class="crm-section transfer_scheme-section"> <div class="content"> <input id="SEPA_scheme" name="transfer_scheme" value="SEPA" type="radio" checked> <label for="SEPA_scheme">SEPA</label> <input id="National_scheme" name="transfer_scheme" value="national" type="radio"> <label for="National_scheme">National</label> </div> <div class="clear"></div> </div>';
+
+var field_tpl = '<div class="crm-section @@name@@-section hidden"><div class="label"><label for="@@name@@">@@label@@</label><span class="crm-marker" title="This field is required.">*</span></div><div class="content"><input size="34" maxlength="34" autocomplete="off" name="@@name@@" id="@@name@@" class="crm-form-text" type="text"> <img style="display: none;" id="bic_busy" src="/sites/all/modules/civicrm/i/loading.gif" height="12"></div><div class="clear"></div></div>'
 
 function addField(name, label) {
   var $iban = jQuery('.bank_account_number-section');
@@ -135,6 +137,10 @@ if (isIBANConverted(formId)) {
   addField('branch_code', "Branch code");
   addField('check_digits', "Check digits");
   addField('account', "Account number");
+  jQuery('input[name=transfer_scheme]').on('click', function (e) {
+    jQuery('#bank_code-section, #branch_code-section, #check_digits-section, #account-section, #bank_account_number-section, #bank_identification_number-section').toggle();
+  });
+
   jQuery('#bank_code, #branch_code, #check_digits, #account').on('change', function(e) {
     $iban.val(genIBAN(country));
   });
