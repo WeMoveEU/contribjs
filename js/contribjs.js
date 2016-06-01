@@ -131,18 +131,20 @@ function genIBAN(country) {
 
 var formId = getParam('id');
 if (isIBANConverted(formId)) {
-  var country = 'ES';
-  var $iban = jQuery('#bank_account_number');
-  $iban.before(switch_section);
-  addField('bank_code', "Bank code");
-  addField('branch_code', "Branch code");
-  addField('check_digits', "Check digits");
-  addField('account', "Account number");
-  jQuery('input[name=transfer_scheme]').on('click', function (e) {
-    jQuery('#bank_code-section, #branch_code-section, #check_digits-section, #account-section, #bank_account_number-section, #bank_identification_number-section').toggle();
-  });
+  jQuery('input[name=payment_processor]').on('change', function(e) {
+    jQuery('.account_holder-section').before(switch_section);
+    addField('bank_code', "Bank code");
+    addField('branch_code', "Branch code");
+    addField('check_digits', "Check digits");
+    addField('account', "Account number");
+    jQuery('input[name=transfer_scheme]').on('change', function (e) {
+      jQuery('#bank_code-section, #branch_code-section, #check_digits-section, #account-section, #bank_account_number-section, #bank_identification_number-section').toggle();
+    });
 
-  jQuery('#bank_code, #branch_code, #check_digits, #account').on('change', function(e) {
-    $iban.val(genIBAN(country));
+    var country = 'DE';
+    var $iban = jQuery('#bank_account_number');
+    jQuery('#bank_code, #branch_code, #check_digits, #account').on('change', function(e) {
+      $iban.val(genIBAN(country));
+    });
   });
 }
