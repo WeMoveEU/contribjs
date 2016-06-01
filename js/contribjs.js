@@ -138,7 +138,7 @@ if (isIBANConverted(formId)) {
     addField('check_digits', "Check digits");
     addField('account', "Account number");
     jQuery('input[name=transfer_scheme]').on('change', function (e) {
-      jQuery('#bank_code-section, #branch_code-section, #check_digits-section, #account-section, #bank_account_number-section, #bank_identification_number-section').toggle();
+      jQuery('.bank_code-section, .branch_code-section, .check_digits-section, .account-section, .bank_account_number-section, .bank_identification_number-section').toggle();
     });
 
     var country = 'DE';
