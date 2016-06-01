@@ -152,7 +152,7 @@ function enableNationalForm(country) {
   var $iban = jQuery('#bank_account_number');
   jQuery('input[name=transfer_scheme]').on('change', function (e) {
     jQuery(fieldSelect + '.bank_account_number-section, .bank_identification_number-section').toggle();
-    $iban.focus();
+    $iban.click();
   });
 
   jQuery('#bank_code, #branch_code, #check_digits, #account').on('change', function(e) {
