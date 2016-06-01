@@ -11,6 +11,9 @@ legend {
   margin: 10px 0;
 }
 
+.intro_text-section {
+  margin-bottom: 1em;
+}
 .crm-container .crm-section .label {
   width: 25%;
 }
@@ -33,7 +36,16 @@ legend {
   display: inline-block;
 }
 #crm-container.crm-public .price-set-row input {
-  margin: 0 4px;
+  display: none;
+}
+.price-set-option-content.highlight {
+  background-color: #05b1b2;
+}
+.price-set-option-content {
+  padding: .2em 1em .5em;
+  border: solid 1px;
+  border-radius: 5px;
+  background-color: #d9d9d9;
 }
 
 @media screen and (max-width:767px) {
