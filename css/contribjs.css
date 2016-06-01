@@ -1,3 +1,58 @@
+.region-content {
+  font-family: 'Open Sans', sans-serif;
+}
+#page-header, footer.footer {
+  display: none;
+}
+.language-switcher-locale-url {
+  visibility: hidden;
+}
 legend {
-    font-style: italic; /* just for test */
+  margin: 10px 0;
+}
+
+#crm-container #intro_text.intro_text-section {
+  margin-bottom: 1em;
+}
+.crm-container .crm-section .label {
+  width: 25%;
+}
+.crm-container .crm-section .content {
+  margin-left: 27%;
+}
+.crm-container .crm-section.other_amount-section {
+  display: none;
+}
+.crm-container .crm-section.is_recur-section .label {
+  display: none;
+}
+
+#crm-container.crm-public .label,
+#crm-container.crm-public .content {
+  padding: .2em .6em;
+  line-height: 1.8em;
+}
+#crm-container.crm-public .price-set-row {
+  display: inline-block;
+}
+#crm-container.crm-public .price-set-row input {
+  display: none;
+}
+.price-set-option-content.highlight {
+  background-color: #05b1b2;
+}
+.price-set-option-content {
+  padding: .2em 1em .5em;
+  border: solid 1px;
+  border-radius: 5px;
+  background-color: #d9d9d9;
+}
+
+@media screen and (max-width:767px) {
+  .crm-container .crm-section .label {
+    float: none;
+  }
+  .crm-container .crm-section .content {
+    margin-left: auto;
+  }
 }
