@@ -166,11 +166,10 @@ if (isIBANConverted(formId)) {
   var $payProc = jQuery('input[name=payment_processor]');
   if (jQuery('.direct_debit_info-group').length) {
     enableNationalForm(country);
-  } else {
-    $payProc.on('change', function(e) {
-      if ($payProc.filter(':checked').val() == '3') {
-	enableNationalForm(country);
-      }
-    });
   }
+  $payProc.on('change', function(e) {
+    if ($payProc.filter(':checked').val() == '3') {
+      enableNationalForm(country);
+    }
+  });
 }
