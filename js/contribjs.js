@@ -46,6 +46,12 @@ var natFields = {
   DE: {
     'bank_code': "Bank code",
     'account': "Account number"
+  },
+  FR: {
+    'bank_code': "Code banque",
+    'branch_code': "Code guichet",
+    'account': "Compte",
+    'check_digits': "Clé RIB"
   }
 }
 
@@ -103,8 +109,10 @@ function genIBAN(country) {
 }
 
 function enableNationalForm(country) {
-  jQuery('.account_holder-section').before(switch_section);
-  addNationalForm(country);
+  if (natFields[country]) {
+    jQuery('.account_holder-section').before(switch_section);
+    addNationalForm(country);
+  }
 }
 
 function addNationalForm(country) {
