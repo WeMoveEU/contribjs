@@ -205,11 +205,13 @@ jQuery(function($) {
 	enableNationalForm(country);
       }
     });
-    jQuery('#country-1').on('change', function(e) {
-      if ($payProc.filter(':checked').val() == '3') {
-	var country = readCountry(contribConfig);
-	updateNationalForm(country);
-      }
+    CRM.$(function($) {
+      $('#country-1').on('change', function(e) {
+	if ($payProc.filter(':checked').val() == '3') {
+	  var country = readCountry(contribConfig);
+	  updateNationalForm(country);
+	}
+      });
     });
   }
 });
