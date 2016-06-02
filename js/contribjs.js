@@ -1,3 +1,6 @@
+// Set by earlier in a drupal block
+var contribConfig = window.contribConfig || {};
+
 function getParam(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
@@ -26,7 +29,8 @@ jQuery('.price-set-row input').on('change', function(e) {
 /* Convert daily/weekly donations to monthly donations */
 
 function isConvertedToMonthly() {
-  return getParam('id') == 24;
+  var weeklyPages = contribConfig.weeklyPages || [];
+  return weeklyPages.indexOf(contribConfig.pageId) >= 0;
 }
 
 function getMonthlyValue() {
@@ -89,8 +93,8 @@ var natFields = {
 }
 
 function isIBANConverted(formId) {
-  var toConvert = ['19'];
-  return toConvert.indexOf(formId) >= 0;
+  var ibanMagicPages = contribConfig.ibanMagicPages || [];
+  return ibanMagicPages.indexOf(formId) >= 0;
 }
 
 var switch_section = '<div class="crm-section transfer_scheme-section"> <div class="content"> <input id="SEPA_scheme" name="transfer_scheme" value="SEPA" type="radio" checked> <label for="SEPA_scheme">SEPA</label> <input id="National_scheme" name="transfer_scheme" value="national" type="radio"> <label for="National_scheme">National</label> </div> <div class="clear"></div> </div>';
@@ -160,8 +164,7 @@ function enableNationalForm(country) {
   });
 }
 
-var formId = getParam('id');
-if (isIBANConverted(formId)) {
+if (isIBANConverted(contribConfig.pageId) {
   var country = 'DE';
   var $payProc = jQuery('input[name=payment_processor]');
   if (jQuery('.direct_debit_info-group').length) {
@@ -173,3 +176,4 @@ if (isIBANConverted(formId)) {
     }
   });
 }
+
