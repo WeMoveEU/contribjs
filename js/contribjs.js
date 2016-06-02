@@ -36,25 +36,6 @@ function updateMonthlyValue() {
 
 /* IBAN magic */
 
-var natFields = {
-  ES: {
-    'bank_code': "Bank code",
-    'branch_code': "Branch code",
-    'check_digits': "Check digits",
-    'account': "Account number"
-  },
-  DE: {
-    'bank_code': "Bank code",
-    'account': "Account number"
-  },
-  FR: {
-    'bank_code': "Code banque",
-    'branch_code': "Code guichet",
-    'account': "Compte",
-    'check_digits': "Clé RIB"
-  }
-}
-
 function isIBANConverted(formId) {
   var ibanMagicPages = contribConfig.ibanMagicPages || [];
   return ibanMagicPages.indexOf(formId) >= 0;
@@ -94,7 +75,7 @@ function mod97(digits) {
 
 function getBBAN(country) {
   var bban = '';
-  for (field_id in natFields[country]) {
+  for (field_id in contribConfig.nationalFields[country]) {
     bban += jQuery('#' + field_id).val();
   }
   return bban;
@@ -109,7 +90,7 @@ function genIBAN(country) {
 }
 
 function enableNationalForm(country) {
-  if (natFields[country]) {
+  if (contribConfig.nationalFields[country]) {
     jQuery('.account_holder-section').before(switch_section);
     addNationalForm(country);
   }
@@ -117,8 +98,8 @@ function enableNationalForm(country) {
 
 function addNationalForm(country) {
   var fieldSelect = [];
-  for (field_id in natFields[country]) {
-    addField(field_id, natFields[country][field_id]);
+  for (field_id in contribConfig.nationalFields[country]) {
+    addField(field_id, contribConfig.nationalFields[country][field_id]);
     fieldSelect.push('.' + field_id + '-section');
   }
   fieldSelect = fieldSelect.join(', ');
