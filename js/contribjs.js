@@ -56,7 +56,7 @@ function isIBANConverted(formId) {
 
 var switch_section = '<div class="crm-section transfer_scheme-section"> <div class="content"> <input id="SEPA_scheme" name="transfer_scheme" value="SEPA" type="radio" checked> <label for="SEPA_scheme">SEPA</label> <input id="National_scheme" name="transfer_scheme" value="national" type="radio"> <label for="National_scheme">National</label> </div> <div class="clear"></div> </div>';
 
-var field_tpl = '<div class="crm-section @@name@@-section" style="display: none"><div class="label"><label for="@@name@@">@@label@@</label><span class="crm-marker" title="This field is required.">*</span></div><div class="content"><input size="34" maxlength="34" autocomplete="off" name="@@name@@" id="@@name@@" class="crm-form-text" type="text"> <img style="display: none;" id="bic_busy" src="/sites/all/modules/civicrm/i/loading.gif" height="12"></div><div class="clear"></div></div>'
+var field_tpl = '<div class="crm-section @@name@@-section national-transfer" style="display: none"><div class="label"><label for="@@name@@">@@label@@</label><span class="crm-marker" title="This field is required.">*</span></div><div class="content"><input size="34" maxlength="34" autocomplete="off" name="@@name@@" id="@@name@@" class="crm-form-text" type="text"> <img style="display: none;" id="bic_busy" src="/sites/all/modules/civicrm/i/loading.gif" height="12"></div><div class="clear"></div></div>'
 
 function addField(name, label) {
   var $iban = jQuery('.bank_account_number-section');
@@ -104,21 +104,40 @@ function genIBAN(country) {
 
 function enableNationalForm(country) {
   jQuery('.account_holder-section').before(switch_section);
-  var fieldSelect = '';
+  addNationalForm(country);
+}
+
+function addNationalForm(country) {
+  var fieldSelect = [];
   for (field_id in natFields[country]) {
     addField(field_id, natFields[country][field_id]);
-    fieldSelect += '.' + field_id + '-section, ';
+    fieldSelect.push('.' + field_id + '-section');
   }
+  fieldSelect = fieldSelect.join(', ');
 
   var $iban = jQuery('#bank_account_number');
   jQuery('input[name=transfer_scheme]').on('change', function (e) {
-    jQuery(fieldSelect + '.bank_account_number-section, .bank_identification_number-section').toggle();
+    jQuery(fieldSelect + ', .bank_account_number-section, .bank_identification_number-section').toggle();
     $iban.click();
   });
 
-  jQuery('#bank_code, #branch_code, #check_digits, #account').on('change', function(e) {
+  jQuery(fieldSelect).on('change', function(e) {
     $iban.val(genIBAN(country));
   });
+}
+
+function updateNationalForm(country) {
+  jQuery('.national-transfer input').off('change');
+  jQuery('.national-transfer').remove();
+  jQuery('input[name=transfer_scheme]').off('change');
+
+  addNationalForm(country);
+}
+
+function readCountry(contribConfig) {
+  var country = contribConfig.countries[jQuery('#country-1').val()];
+  if (!country) country = contribConfig.language;
+  return country;
 }
 
 jQuery(function($) {
@@ -167,14 +186,21 @@ jQuery(function($) {
     jQuery(this).val(jQuery(this).val().replace(/,/g,"."));
   });
   if (isIBANConverted(contribConfig.pageId)) {
-    var country = 'DE';
     var $payProc = jQuery('input[name=payment_processor]');
     if (jQuery('.direct_debit_info-group').length) {
+      var country = readCountry(contribConfig);
       enableNationalForm(country);
     }
     $payProc.on('change', function(e) {
       if ($payProc.filter(':checked').val() == '3') {
+	var country = readCountry(contribConfig);
 	enableNationalForm(country);
+      }
+    });
+    jQuery('#country-1').on('change', function(e) {
+      if ($payProc.filter(':checked').val() == '3') {
+	var country = readCountry(contribConfig);
+	updateNationalForm(country);
       }
     });
   }
