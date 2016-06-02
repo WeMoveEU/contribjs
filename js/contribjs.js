@@ -164,7 +164,7 @@ function enableNationalForm(country) {
   });
 }
 
-if (isIBANConverted(contribConfig.pageId) {
+if (isIBANConverted(contribConfig.pageId)) {
   var country = 'DE';
   var $payProc = jQuery('input[name=payment_processor]');
   if (jQuery('.direct_debit_info-group').length) {
