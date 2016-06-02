@@ -122,6 +122,9 @@ function addNationalForm(country) {
     fieldSelect.push('.' + field_id + '-section');
   }
   fieldSelect = fieldSelect.join(', ');
+  if (jQuery('input[name=transfer_scheme]').filter(':checked').val() === 'national') {
+    jQuery(fieldSelect).show();
+  }
 
   var $iban = jQuery('#bank_account_number');
   jQuery('input[name=transfer_scheme]').on('change', function (e) {
