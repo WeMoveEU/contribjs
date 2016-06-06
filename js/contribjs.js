@@ -113,8 +113,9 @@ function addNationalForm(country) {
     $iban.click();
   });
 
-  jQuery(fieldSelect).on('change', function(e) {
+  jQuery(fieldSelect).on('keyup', function(e) {
     $iban.val(genIBAN(country));
+    $iban.click();
   });
 }
 
@@ -177,6 +178,8 @@ jQuery(function($) {
   jQuery(".other_amount-content input[name*=price]").change(function(e) {
     jQuery(this).val(jQuery(this).val().replace(/,/g,"."));
   });
+
+  /* Set up IBAN magic */
   if (isIBANConverted(contribConfig.pageId)) {
     var $payProc = jQuery('input[name=payment_processor]');
     if (jQuery('.direct_debit_info-group').length) {
@@ -185,16 +188,16 @@ jQuery(function($) {
     }
     $payProc.on('change', function(e) {
       if ($payProc.filter(':checked').val() == '3') {
-	var country = readCountry(contribConfig);
-	enableNationalForm(country);
+      	var country = readCountry(contribConfig);
+      	enableNationalForm(country);
       }
     });
     CRM.$(function($) {
       $('#country-1').on('change', function(e) {
-	if ($payProc.filter(':checked').val() == '3') {
-	  var country = readCountry(contribConfig);
-	  updateNationalForm(country);
-	}
+      	if ($payProc.filter(':checked').val() == '3') {
+      	  var country = readCountry(contribConfig);
+      	  updateNationalForm(country);
+      	}
       });
     });
   }
