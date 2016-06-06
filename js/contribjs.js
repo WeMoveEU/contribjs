@@ -115,7 +115,7 @@ function addNationalForm(country) {
 
   jQuery(fieldSelect).on('keyup', function(e) {
     $iban.val(genIBAN(country));
-    $iban.click();
+    $iban.trigger('click');
   });
 }
 
