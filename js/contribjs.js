@@ -115,7 +115,13 @@ function addNationalForm(country) {
 
   jQuery(fieldSelect).on('keyup', function(e) {
     $iban.val(genIBAN(country));
-    $iban.trigger('click');
+    // set the timer to look up BIC when user stops typing
+    if (sepa_lookup_bic_timerID) {
+      // clear any existing lookup timers
+      clearTimeout(sepa_lookup_bic_timerID);
+      sepa_lookup_bic_timerID = 0;
+    }
+    sepa_lookup_bic_timerID = window.setTimeout(sepa_lookup_bic, sepa_lookup_bic_timeout);
   });
 }
 
