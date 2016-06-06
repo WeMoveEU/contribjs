@@ -201,4 +201,18 @@ jQuery(function($) {
       });
     });
   }
+
+  /* Pre-fill first name, last name and email */
+  var fields = {
+    1 : "first_name",
+    2 : "last_name",
+    3 : "email"
+  };
+  jQuery.each(fields, function(k, f) {
+    var el = jQuery("input[name*="+f+"]");
+    if (!el.val()) {
+      el.val(getParam(f));
+    }
+  });
+
 });
