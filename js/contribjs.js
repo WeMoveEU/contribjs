@@ -41,16 +41,6 @@ function isIBANConverted(formId) {
   return ibanMagicPages.indexOf(formId) >= 0;
 }
 
-var switch_section = 
-  '<div class="crm-section transfer_scheme-section">'
-+  '<div class="content">'
-+   '<input id="SEPA_scheme" name="transfer_scheme" value="SEPA" type="radio" checked> '
-+   '<label for="SEPA_scheme">' + contribConfig.translations['SEPA_transfer'] + '</label> '
-+   '<input id="National_scheme" name="transfer_scheme" value="national" type="radio"> '
-+   '<label for="National_scheme">' + contribConfig.translations['National_transfer'] + '</label>'
-+  '</div>'
-+  '<div class="clear"></div>'
-+ '</div>';
 
 var field_tpl = '<div class="crm-section @@name@@-section national-transfer" style="display: none"><div class="label"><label for="@@name@@">@@label@@</label><span class="crm-marker" title="This field is required.">*</span></div><div class="content"><input size="34" maxlength="34" autocomplete="off" name="@@name@@" id="@@name@@" class="crm-form-text" type="text"> <img style="display: none;" id="bic_busy" src="/sites/all/modules/civicrm/i/loading.gif" height="12"></div><div class="clear"></div></div>'
 
@@ -99,6 +89,17 @@ function genIBAN(country) {
 }
 
 function enableNationalForm(country) {
+  var switch_section = 
+    '<div class="crm-section transfer_scheme-section">'
+  +  '<div class="content">'
+  +   '<input id="SEPA_scheme" name="transfer_scheme" value="SEPA" type="radio" checked> '
+  +   '<label for="SEPA_scheme">' + contribConfig.translations['SEPA_transfer'] + '</label> '
+  +   '<input id="National_scheme" name="transfer_scheme" value="national" type="radio"> '
+  +   '<label for="National_scheme">' + contribConfig.translations['National_transfer'] + '</label>'
+  +  '</div>'
+  +  '<div class="clear"></div>'
+  + '</div>';
+  
   if (contribConfig.nationalFields[country]) {
     jQuery('.account_holder-section').before(switch_section);
     addNationalForm(country);
