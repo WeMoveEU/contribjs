@@ -142,6 +142,14 @@ function readCountry(contribConfig) {
   return country;
 }
 
+function copyFrozenFields() {
+  jQuery('.crm-frozen-field').each(function() {
+    var $span = jQuery(this);
+    var id = '#billing_' + jQuery('input', $span).attr('id');
+    jQuery(id).val($span.text());
+  });
+}
+
 jQuery(function($) {
   // Set by earlier in a drupal block
   var contribConfig = window.contribConfig || {};
@@ -225,5 +233,14 @@ jQuery(function($) {
       el.val(getParam(f));
     }
   });
+  /* pre-fill billing with frozen fields */
+  if ($('#billingcheckbox').prop('checked')) {
+    copyFrozenFields();
+  }
+  $('#billingcheckbox').click(function () {
+    if (this.checked) {
+      copyFrozenFields();
+    }
+  }
 
 });
