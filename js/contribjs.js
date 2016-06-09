@@ -145,7 +145,9 @@ function readCountry(contribConfig) {
 function copyFrozenFields() {
   jQuery('.crm-frozen-field').each(function() {
     var $span = jQuery(this);
-    var id = '#billing_' + jQuery('input', $span).attr('id');
+    var $input = jQuery('input', $span);
+    var id = '#billing_' + $input.attr('id');
+    $input.val($span.text());
     jQuery(id).val($span.text());
   });
 }
