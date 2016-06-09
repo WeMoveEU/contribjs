@@ -240,13 +240,6 @@ jQuery(function($) {
     }
   });
   /* pre-fill billing with frozen fields */
-  if ($('#billingcheckbox').prop('checked')) {
-    copyFrozenFields();
-  }
-  $('#billingcheckbox').click(function () {
-    if (this.checked) {
-      copyFrozenFields();
-    }
-  });
+  copyFrozenFields();
 
 });
