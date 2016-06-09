@@ -99,7 +99,7 @@ function enableNationalForm(country) {
   +  '</div>'
   +  '<div class="clear"></div>'
   + '</div>';
-  
+ } 
   if (contribConfig.nationalFields[country]) {
     jQuery('.account_holder-section').before(switch_section);
     addNationalForm(country);
@@ -155,10 +155,12 @@ jQuery(function($) {
     jQuery(".price-set-row input[data-amount="+da+"]").prop("checked", true).click();
   }
 
-
   //Show / hide other amount input
+  var $other = jQuery('.crm-container .crm-section.other_amount-section');
+  if (jQuery('.price-set-row input[value=0]').is(':checked')) {
+    $other.show();
+  }
   jQuery('.price-set-row input').on('change', function(e) {
-    var $other = jQuery('.crm-container .crm-section.other_amount-section'); 
     var val = jQuery(this).val();
     if (val == 0) {
       $other.show();
