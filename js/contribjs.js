@@ -241,6 +241,6 @@ jQuery(function($) {
     if (this.checked) {
       copyFrozenFields();
     }
-  }
+  });
 
 });
