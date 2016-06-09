@@ -99,7 +99,6 @@ function enableNationalForm(country) {
   +  '</div>'
   +  '<div class="clear"></div>'
   + '</div>';
- } 
   if (contribConfig.nationalFields[country]) {
     jQuery('.account_holder-section').before(switch_section);
     addNationalForm(country);
