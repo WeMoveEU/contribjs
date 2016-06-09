@@ -177,6 +177,10 @@ jQuery(function($) {
       $other.hide();
     }
   });
+  // Use phone friendly field types
+  jQuery('#email-5').attr('type', 'email');
+  jQuery('#credit_card_number').attr('type', 'tel');
+  jQuery('#cvv2').attr('type', 'tel');
 
   if (isConvertedToMonthly()) {
     var $monthlyInfo = jQuery('<div class="crm-section"><div class="label"></div><div class="content" id="monthlyInfo">You will contribute € <span id="monthlyValue"></span> per month</div><div class="clear"></div></div>');
