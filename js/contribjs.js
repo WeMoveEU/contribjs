@@ -75,7 +75,12 @@ function mod97(digits) {
 function getBBAN(country) {
   var bban = '';
   for (field_id in contribConfig.nationalFields[country]) {
-    bban += jQuery('#' + field_id).val();
+    var value = jQuery('#' + field_id).val().split(' ').join('');
+    if (country === 'DE' && field_id === 'account') {
+      bban += ('0000000000' + value).slice(-10);
+    } else {
+      bban += value;
+    }
   }
   return bban;
 }
@@ -120,6 +125,11 @@ function addNationalForm(country) {
   jQuery('input[name=transfer_scheme]').on('change', function (e) {
     jQuery(fieldSelect + ', .bank_account_number-section, .bank_identification_number-section').toggle();
     $iban.click();
+    if (jQuery('input[name=transfer_scheme][value=national]').is(':checked')) {
+      ga('send', 'event', 'SEPA', 'national_account', country);
+    } else {
+      ga('send', 'event', 'SEPA', 'IBAN_account', country);
+    }
   });
 
   jQuery(fieldSelect).on('keyup', function(e) {
