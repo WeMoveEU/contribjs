@@ -163,7 +163,7 @@ function copyFrozenFields() {
 }
 
 jQuery(function($) {
-  // Set by earlier in a drupal block
+  // Set earlier in a drupal block
   var contribConfig = window.contribConfig || {};
 
   // set default amount based on param donation_amount in url
@@ -212,6 +212,20 @@ jQuery(function($) {
   /* Converting comma to dot in other amount field */
   jQuery(".other_amount-content input[name*=price]").change(function(e) {
     jQuery(this).val(jQuery(this).val().replace(/,/g,"."));
+  });
+
+  /* Hide CC fields for paypal */
+  $payProc.on('change', function(e) {
+    if ($payProc.filter(':checked').val() == '5') {
+      var toHide = [
+        ".credit_card_info-section", 
+        "#billingcheckbox", 
+        "label[for=billingcheckbox]", 
+        ".billing_name_address-group",
+        "#crm-submit-buttons"
+      ];
+      jQuery(toHide.join(', ')).hide();
+    }
   });
 
   /* Set up IBAN magic */
