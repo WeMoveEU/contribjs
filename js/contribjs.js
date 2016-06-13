@@ -215,6 +215,7 @@ jQuery(function($) {
   });
 
   /* Hide CC fields for paypal */
+  var $payProc = jQuery('input[name=payment_processor]');
   $payProc.on('change', function(e) {
     if ($payProc.filter(':checked').val() == '5') {
       var toHide = [
@@ -230,7 +231,6 @@ jQuery(function($) {
 
   /* Set up IBAN magic */
   if (isIBANConverted(contribConfig.pageId)) {
-    var $payProc = jQuery('input[name=payment_processor]');
     if (jQuery('.direct_debit_info-group').length) {
       var country = readCountry(contribConfig);
       enableNationalForm(country);
