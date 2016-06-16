@@ -221,15 +221,18 @@ jQuery(function($) {
 
   /* Hide CC fields for paypal */
   var $payProc = jQuery('input[name=payment_processor]');
+  var toHide = [
+    ".credit_card_info-section", 
+    "#billingcheckbox", 
+    "label[for=billingcheckbox]", 
+    ".billing_name_address-group",
+    "#crm-submit-buttons"
+  ];
+  if ($payProc.filter(':checked').val() == '5') {
+    jQuery(toHide.join(', ')).hide();
+  }
   $payProc.on('change', function(e) {
     if ($payProc.filter(':checked').val() == '5') {
-      var toHide = [
-        ".credit_card_info-section", 
-        "#billingcheckbox", 
-        "label[for=billingcheckbox]", 
-        ".billing_name_address-group",
-        "#crm-submit-buttons"
-      ];
       jQuery(toHide.join(', ')).hide();
     }
   });
