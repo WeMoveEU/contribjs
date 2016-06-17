@@ -97,7 +97,7 @@ function enableNationalForm(country) {
   var $switch_section = jQuery('input[value=SEPA]').parent().parent();
   if (contribConfig.nationalFields[country]) {
     $switch_section.remove();
-    jQuery('.label', $switch_section).hide();
+    jQuery('.label, .crm-clear-link', $switch_section).hide();
     jQuery('.account_holder-section').before($switch_section);
     $switch_section.show();
     addNationalForm(country);
