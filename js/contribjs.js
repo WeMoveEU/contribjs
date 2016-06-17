@@ -94,18 +94,12 @@ function genIBAN(country) {
 }
 
 function enableNationalForm(country) {
-  var switch_section = 
-    '<div class="crm-section transfer_scheme-section">'
-  +  '<div class="content">'
-  +   '<input id="SEPA_scheme" name="transfer_scheme" value="SEPA" type="radio" checked> '
-  +   '<label for="SEPA_scheme">' + contribConfig.translations['SEPA_transfer'] + '</label> '
-  +   '<input id="National_scheme" name="transfer_scheme" value="national" type="radio"> '
-  +   '<label for="National_scheme">' + contribConfig.translations['National_transfer'] + '</label>'
-  +  '</div>'
-  +  '<div class="clear"></div>'
-  + '</div>';
+  var $switch_section = jQuery('input[value=SEPA]').parent().parent();
   if (contribConfig.nationalFields[country]) {
-    jQuery('.account_holder-section').before(switch_section);
+    $switch_section.remove();
+    jQuery('.label', $switch_section).hide();
+    jQuery('.account_holder-section').before($switch_section);
+    $switch_section.show();
     addNationalForm(country);
   }
 }
@@ -117,15 +111,15 @@ function addNationalForm(country) {
     fieldSelect.push('.' + field_id + '-section');
   }
   fieldSelect = fieldSelect.join(', ');
-  if (jQuery('input[name=transfer_scheme]').filter(':checked').val() === 'national') {
+  if (jQuery('input[value=National]').is(':checked')) {
     jQuery(fieldSelect).show();
   }
 
   var $iban = jQuery('#bank_account_number');
-  jQuery('input[name=transfer_scheme]').on('change', function (e) {
+  jQuery('input[value=National]').on('change', function (e) {
     jQuery(fieldSelect + ', .bank_account_number-section, .bank_identification_number-section').toggle();
     $iban.click();
-    if (jQuery('input[name=transfer_scheme][value=national]').is(':checked')) {
+    if (jQuery('input[value=National]').is(':checked')) {
       ga('send', 'event', 'SEPA', 'national_account', country);
     } else {
       ga('send', 'event', 'SEPA', 'IBAN_account', country);
@@ -141,7 +135,7 @@ function addNationalForm(country) {
 function updateNationalForm(country) {
   jQuery('.national-transfer input').off('change');
   jQuery('.national-transfer').remove();
-  jQuery('input[name=transfer_scheme]').off('change');
+  jQuery('input[value=National]').off('change');
 
   addNationalForm(country);
 }
@@ -239,6 +233,7 @@ jQuery(function($) {
 
   /* Set up IBAN magic */
   if (isIBANConverted(contribConfig.pageId)) {
+    jQuery('input[value=SEPA]').parent().parent().hide();
     if (jQuery('.direct_debit_info-group').length) {
       var country = readCountry(contribConfig);
       enableNationalForm(country);
