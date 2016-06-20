@@ -93,8 +93,19 @@ function genIBAN(country) {
   return country + checksum + bban;
 }
 
+var switchHtml = null;
 function enableNationalForm(country) {
-  var $switch_section = jQuery('input[value=SEPA]').parent().parent();
+  //First call, we move the field created by custom profile and save the HTML
+  //next calls we re-use the saved HTML
+  if (switchHtml === null) {
+    $switch_section = jQuery('input[value=SEPA]').parent().parent();
+    jQuery('label[for=CIVICRM_QFID_SEPA_2]', $switch_section).html(contribConfig.translations['SEPA_transfer']);
+    jQuery('label[for=CIVICRM_QFID_National_4]', $switch_section).html(contribConfig.translations['National_transfer']);
+    switchHtml = $switch_section[0].outerHTML;
+  } else {
+    $switch_section = jQuery(switchHtml);
+  }
+
   if (contribConfig.nationalFields[country]) {
     $switch_section.remove();
     jQuery('.label, .crm-clear-link', $switch_section).hide();
@@ -116,7 +127,7 @@ function addNationalForm(country) {
   }
 
   var $iban = jQuery('#bank_account_number');
-  jQuery('input[value=National]').on('change', function (e) {
+  jQuery('input[value=National], input[value=SEPA]').on('change', function (e) {
     jQuery(fieldSelect + ', .bank_account_number-section, .bank_identification_number-section').toggle();
     $iban.click();
     if (jQuery('input[value=National]').is(':checked')) {
