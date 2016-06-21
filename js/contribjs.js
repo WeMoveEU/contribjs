@@ -131,10 +131,12 @@ function addNationalForm(country) {
   jQuery('input[value=National], input[value=SEPA]').on('change', function (e) {
     jQuery(fieldSelect + ', .bank_account_number-section, .bank_identification_number-section').toggle();
     $iban.click();
-    if (jQuery('input[value=National]').is(':checked')) {
-      ga('send', 'event', 'SEPA', 'national_account', country);
-    } else {
-      ga('send', 'event', 'SEPA', 'IBAN_account', country);
+    if (window.ga) {
+      if (jQuery('input[value=National]').is(':checked')) {
+        ga('send', 'event', 'SEPA', 'national_account', country);
+      } else {
+        ga('send', 'event', 'SEPA', 'IBAN_account', country);
+      }
     }
   });
 
@@ -242,6 +244,12 @@ jQuery(function($) {
   if (nbProc > 1) {
     var procId = Math.floor(Math.random() * nbProc);
     $payProc.eq(procId).prop('checked', true).click();
+    if (window.ga) {
+      ga('send', 'event', 'PayProc', $payProc.filter(':checked').val(), readCountry(contribConfig));
+      $payProc.on('change', function(e) {
+        ga('send', 'event', 'PayProc', $payProc.filter(':checked').val(), readCountry(contribConfig));
+      });
+    }
   }
 
   /* Hide CC fields for paypal */
