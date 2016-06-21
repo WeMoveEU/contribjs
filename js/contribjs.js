@@ -240,17 +240,17 @@ jQuery(function($) {
 
   var $payProc = CRM.$('input[name=payment_processor]');
   /* Choose randomly form of payment */
-  var nbProc = $payProc.length;
-  if (nbProc > 1) {
-    var procId = Math.floor(Math.random() * nbProc);
-    $payProc.eq(procId).prop('checked', true).click().change();
-    if (window.ga) {
-      ga('send', 'event', 'PayProc', $payProc.filter(':checked').val(), readCountry(contribConfig));
-      $payProc.on('change', function(e) {
-        ga('send', 'event', 'PayProc', $payProc.filter(':checked').val(), readCountry(contribConfig));
-      });
-    }
-  }
+  // var nbProc = $payProc.length;
+  // if (nbProc > 1) {
+  //   var procId = Math.floor(Math.random() * nbProc);
+  //   $payProc.eq(procId).prop('checked', true).click().change();
+  //   if (window.ga) {
+  //     ga('send', 'event', 'PayProc', $payProc.filter(':checked').val(), readCountry(contribConfig));
+  //     $payProc.on('change', function(e) {
+  //       ga('send', 'event', 'PayProc', $payProc.filter(':checked').val(), readCountry(contribConfig));
+  //     });
+  //   }
+  // }
 
   /* Hide CC fields for paypal */
   var toHide = [
