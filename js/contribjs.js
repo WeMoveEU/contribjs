@@ -199,12 +199,21 @@ jQuery(function($) {
 
   if (isConvertedToMonthly()) {
     var $monthlyInfo = jQuery(
-      '<div class="crm-section">'
-      + '<div class="label"></div>'
-      + '<div class="content" id="monthlyInfo">' + contribConfig.translations['monthlyInfo'] + '</div>'
-      + '<div class="clear"></div></div>'
+        '<div class="crm-section">'
+      +  '<div class="label"></div>'
+      +  '<div class="content" id="monthlyInfo">' + contribConfig.translations['monthlyInfo'] + '</div>'
+      +  '<div class="clear"></div>'
+      + '</div>'
     );
+    var $monthlyOther = jQuery('.price-set-row input[value=0]').clone();
+    var $monthlyInput = jQuery('.other_amount-section input').clone();
+    var priceSetName = jQuery('.price-set-row input').attr('name');
+    jQuery('.price-set-row input').attr('name', priceSetName + '__');
+    jQuery('.other_amount-section').attr('name', priceSetName + '_other');
     jQuery('.other_amount-section').after($monthlyInfo);
+    $monthlyInfo.after($monthlyInput);
+    $monthlyInfo.after($monthlyOther);
+
     jQuery('.price-set-row input').on('change', function(e) {
       updateMonthlyValue();
     });
