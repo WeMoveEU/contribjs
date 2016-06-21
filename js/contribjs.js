@@ -176,9 +176,12 @@ jQuery(function($) {
   var name = 'donation_amount';
   var da = getParam(name);
   if (da > 0) {
-    currentTotal = da.replace(/[^\/\d]/g,'');
+    var total = da.replace(/[^\/\d]/g,'');
     da = da.replace('.', '\\.');
     var $elem = jQuery(".price-set-row input[data-amount="+da+"]").prop("checked", true).click();
+    setTimeout(function () {
+      currentTotal = total;
+    }, 100);
   }
 
   //Show / hide other amount input
