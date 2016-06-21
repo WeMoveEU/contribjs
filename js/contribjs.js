@@ -278,8 +278,10 @@ jQuery(function($) {
     }
     $payProc.on('change', function(e) {
       if ($payProc.filter(':checked').val() == '3') {
-      	var country = readCountry(contribConfig);
-      	enableNationalForm(country);
+        setTimeout(function() {
+          var country = readCountry(contribConfig);
+          enableNationalForm(country);
+        }, 100);
       }
     });
     CRM.$(function($) {
