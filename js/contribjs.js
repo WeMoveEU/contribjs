@@ -177,7 +177,7 @@ jQuery(function($) {
   var da = getParam(name);
   if (da > 0) {
     da = da.replace('.', '\\.');
-    jQuery(".price-set-row input[data-amount="+da+"]").prop("checked", true).click();
+    jQuery(".price-set-row input[data-amount="+da+"]").prop("checked", true).click().change();
   }
 
   //Show / hide other amount input
