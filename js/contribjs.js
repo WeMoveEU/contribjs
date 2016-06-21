@@ -209,8 +209,9 @@ jQuery(function($) {
     var $monthlyInput = jQuery('.other_amount-section input').clone();
     var priceSetName = jQuery('.price-set-row input').attr('name');
     jQuery('.price-set-row input').attr('name', priceSetName + '__');
-    jQuery('.other_amount-section').attr('name', priceSetName + '_other');
+    jQuery('.other_amount-section input').attr('name', priceSetName + '_other');
     jQuery('.other_amount-section').after($monthlyInfo);
+    $monthlyInput.hide(); $monthlyOther.hide();
     $monthlyInfo.after($monthlyInput);
     $monthlyInfo.after($monthlyOther);
 
