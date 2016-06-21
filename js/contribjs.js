@@ -235,8 +235,16 @@ jQuery(function($) {
     jQuery(this).val(jQuery(this).val().replace(/,/g,"."));
   });
 
-  /* Hide CC fields for paypal */
+
   var $payProc = jQuery('input[name=payment_processor]');
+  /* Choose randomly form of payment */
+  var nbProc = $payProc.length;
+  if (nbProc > 1) {
+    var procId = Math.floor(Math.random() * nbProc);
+    $payProc.eq(procId).prop('checked', true).click();
+  }
+
+  /* Hide CC fields for paypal */
   var toHide = [
     ".credit_card_info-section", 
     "#billingcheckbox", 
