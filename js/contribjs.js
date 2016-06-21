@@ -179,7 +179,7 @@ jQuery(function($) {
     da = da.replace('.', '\\.');
     var $elem = jQuery(".price-set-row input[data-amount="+da+"]").prop("checked", true);
     setTimeout(function() { //Some other scripts are listening to these events
-      $elem.click().change();
+      jQuery('.price-set-option-content input').trigger('change');
     }, 50);
   }
 
