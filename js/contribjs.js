@@ -30,6 +30,7 @@ function getMonthlyValue() {
 function updateMonthlyValue() {
   var monthlyValue = getMonthlyValue();
   jQuery('#monthlyValue').text(monthlyValue);
+  jQuery('#monthlyInput').val(monthlyValue);
 }
 
 
@@ -211,7 +212,8 @@ jQuery(function($) {
     jQuery('.price-set-row input').attr('name', priceSetName + '__');
     jQuery('.other_amount-section input').attr('name', priceSetName + '_other');
     jQuery('.other_amount-section').after($monthlyInfo);
-    $monthlyInput.hide(); $monthlyOther.hide();
+    $monthlyOther.prop('checked', 'checked').prop('id', 'monthlyOther').hide();
+    $monthlyInput.prop('id', 'monthlyInput').hide(); 
     $monthlyInfo.after($monthlyInput);
     $monthlyInfo.after($monthlyOther);
 
@@ -222,11 +224,6 @@ jQuery(function($) {
       updateMonthlyValue();
     });
     updateMonthlyValue();
-
-    jQuery('form#Main').on('submit', function(e) {
-      jQuery('.other_amount-section input').val(getMonthlyValue());
-      jQuery('.price-set-row input[value=0]').prop('checked', 'checked');
-    });
   }
 
   /* Converting comma to dot in other amount field */
