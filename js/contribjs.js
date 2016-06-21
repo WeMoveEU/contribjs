@@ -265,7 +265,9 @@ jQuery(function($) {
   }
   $payProc.on('change', function(e) {
     if ($payProc.filter(':checked').val() == '5') {
-      jQuery(toHide.join(', ')).hide();
+      setTimeout(function() {
+        jQuery(toHide.join(', ')).hide();
+      }, 100);
     }
   });
 
