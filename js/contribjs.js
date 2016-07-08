@@ -5,6 +5,10 @@ function getParam(name) {
 
 
 /* Convert daily/weekly donations to monthly donations */
+function isPlainMonthly() {
+  var monthlyPages = contribConfig.monthlyPages || [];
+  return monthlyPages.indexOf(contribConfig.pageId) >= 0;
+}
 
 function isConvertedToMonthly() {
   var weeklyPages = contribConfig.weeklyPages || [];
