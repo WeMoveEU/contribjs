@@ -183,8 +183,11 @@ jQuery(function($) {
   var da = getParam(name);
   if (da > 0) {
     var total = da.replace(/[^\/\d]/g,'');
-    da = da.replace('.', '\\.');
-    var $elem = jQuery(".price-set-row input[data-amount="+da+"]").prop("checked", true).click();
+    da = parseInt(da);
+    var $elem = jQuery(".price-set-row input[data-amount]").filter(function (i, e) {
+      var amount = parseInt($(e).attr('data-amount'));
+      return amount == da;
+    }).prop("checked", true).click();
     setTimeout(function () {
       currentTotal = total;
     }, 100);
