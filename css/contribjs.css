@@ -48,6 +48,10 @@ legend {
   background-color: #d9d9d9;
 }
 
+#billingcheckbox, label[for="billingcheckbox"] {
+  display: none;
+}
+
 @media screen and (max-width:767px) {
   .crm-container .crm-section .label {
     float: none;
