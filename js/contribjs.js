@@ -236,6 +236,11 @@ jQuery(function($) {
     jQuery('.other_amount-section input').on('keyup', function(e) {
       updateMonthlyValue();
     });
+    if (jQuery('.crm-error').length) {
+      var amount = parseFloat (jQuery(".other_amount-content input[name*=price]").val());
+      var monthlyValue = (amount / 4.3).toFixed(2);
+      jQuery('.other_amount-content input[name*=price]').val(monthlyValue);
+    }
     updateMonthlyValue();
   }
 
