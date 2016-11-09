@@ -131,4 +131,7 @@ function contribjs_civicrm_preProcess($formName, &$form) {
     CRM_Core_Resources::singleton()->addScriptFile('eu.wemove.contribjs', 'js/contribjs.js');
     CRM_Core_Resources::singleton()->addStyleFile('eu.wemove.contribjs', 'css/contribjs.css');
   }
+  if (in_array($formName, array('CRM_Contribute_Form_Contribution_ThankYou'))) {
+    CRM_Core_Resources::singleton()->addScriptFile('eu.wemove.contribjs', 'js/thankyou.js');
+  }
 }
