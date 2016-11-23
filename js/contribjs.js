@@ -3,16 +3,33 @@ function getParam(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
 
-
-/* Convert daily/weekly donations to monthly donations */
-function isPlainMonthly() {
-  var monthlyPages = contribConfig.monthlyPages || [];
-  return monthlyPages.indexOf(contribConfig.pageId) >= 0;
+/**
+ * The page id could be read from GET param, but this is safer
+ * in case a alias URL is used
+ */
+function readPageId() {
+  var $mainBlock = jQuery('.crm-contribution-main-form-block');
+  if ($mainBlock.length) {
+    var classes = $mainBlock.attr('class').split(' ');
+    for (var c=0; c<classes.length; c++) {
+      if (classes[c].startsWith('crm-contribution-page-id-')) {
+	return parseInt(classes[c].substr(25));
+      }
+    }
+  }
+  return undefined;
 }
 
+/* Convert weekly donations to monthly donations */
+function isRecurring() {
+  return jQuery('#is_recur').length > 0;
+}
 function isConvertedToMonthly() {
   var weeklyPages = contribConfig.weeklyPages || [];
   return weeklyPages.indexOf(contribConfig.pageId) >= 0;
+}
+function isPlainMonthly() {
+  return isRecurring() && !isConvertedToMonthly();
 }
 
 function getMonthlyValue() {
@@ -41,13 +58,16 @@ function updateMonthlyValue() {
 
 /* IBAN magic */
 
+/**
+ * Checks whether the radio button to switch account format is present.
+ * (it is added with custom profile)
+ */
 function isIBANConverted(formId) {
-  var ibanMagicPages = contribConfig.ibanMagicPages || [];
-  return ibanMagicPages.indexOf(formId) >= 0;
+  return jQuery('input[value=SEPA]').length > 0;
 }
 
 
-var field_tpl = '<div class="crm-section @@name@@-section national-transfer" style="display: none"><div class="label"><label for="@@name@@">@@label@@</label><span class="crm-marker" title="This field is required.">*</span></div><div class="content"><input size="34" maxlength="34" autocomplete="off" name="@@name@@" id="@@name@@" class="crm-form-text" type="text"> <img style="display: none;" id="bic_busy" src="/sites/all/modules/civicrm/i/loading.gif" height="12"></div><div class="clear"></div></div>'
+var field_tpl = '<div class="crm-section @@name@@-section national-transfer" style="display: none"><div class="label"><label for="@@name@@">@@label@@</label> <span class="crm-marker" title="This field is required.">*</span></div><div class="content"><input size="34" maxlength="34" autocomplete="off" name="@@name@@" id="@@name@@" class="crm-form-text" type="text"> <img style="display: none;" id="bic_busy" src="/sites/all/modules/civicrm/i/loading.gif" height="12"></div><div class="clear"></div></div>'
 
 function addField(name, label) {
   var $iban = jQuery('.bank_account_number-section');
@@ -158,6 +178,16 @@ function updateNationalForm(country) {
   addNationalForm(country);
 }
 
+function readLanguage() {
+  var lang = location.pathname.substr(1, 3);
+  if (lang.endsWith('/')) {
+    lang = lang.substr(0, 2);
+  } else {
+    lang = 'gb';
+  }
+  return lang;
+}
+
 function readCountry(contribConfig) {
   var country = contribConfig.countries[jQuery('#country-1').val()];
   if (!country) country = contribConfig.language;
@@ -188,7 +218,9 @@ jQuery(function($) {
       var amount = parseInt($(e).attr('data-amount'));
       return amount == da;
     }).prop("checked", true).click();
-    setTimeout(function () {
+    //Dirty trick to make sure this happens after CiviCRM stuff
+    //currentTotal is a global variable used by Civi
+    setTimeout(function () { 
       currentTotal = total;
     }, 100);
   }
@@ -206,11 +238,20 @@ jQuery(function($) {
       $other.hide();
     }
   });
+  // Pages are either one-off-only or recurring-only
+  // When recurring is enabled, select it and hide it
+  jQuery("#is_recur").attr("checked","checked");
+  jQuery(".is_recur-section").hide();
+
   // Use phone friendly field types
   jQuery('#email-5').attr('type', 'email');
   jQuery('#credit_card_number').attr('type', 'tel');
   jQuery('#cvv2').attr('type', 'tel');
 
+  //Avoid stripe mixing up with other payment processors
+  jQuery('form#Main').after('<input type="hidden" id="stripe-id" value="1" />');
+
+  // Black magic to display a monthly donation as a weekly one
   if (isConvertedToMonthly()) {
     var $monthlyInfo = jQuery(
         '<div class="crm-section">'
