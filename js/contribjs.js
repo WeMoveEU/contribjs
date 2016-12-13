@@ -204,6 +204,22 @@ function copyFrozenFields() {
   });
 }
 
+function hideForPaypal($) {
+  var toHide = [
+    ".credit_card_info-section", 
+    "#billingcheckbox", 
+    "label[for=billingcheckbox]", 
+    ".billing_name_address-group",
+    "#crm-submit-buttons"
+  ];
+  var $payProc = $('input[name=payment_processor]');
+  if ($payProc.filter(':checked').val() == '5') {
+    setTimeout(function() {
+      $(toHide.join(', ')).hide();
+    }, 100);
+  }
+}
+
 jQuery(function($) {
   // Set earlier in a drupal block
   var contribConfig = window.contribConfig || {};
@@ -291,37 +307,15 @@ jQuery(function($) {
   });
 
 
-  var $payProc = CRM.$('input[name=payment_processor]');
-  /* Choose randomly form of payment */
-  // var nbProc = $payProc.length;
-  // if (nbProc > 1) {
-  //   var procId = Math.floor(Math.random() * nbProc);
-  //   $payProc.eq(procId).prop('checked', true).click().change();
-  //   if (window.ga) {
-  //     ga('send', 'event', 'PayProc', $payProc.filter(':checked').val(), readCountry(contribConfig));
-  //     $payProc.on('change', function(e) {
-  //       ga('send', 'event', 'PayProc', $payProc.filter(':checked').val(), readCountry(contribConfig));
-  //     });
-  //   }
-  // }
-
   /* Hide CC fields for paypal */
-  var toHide = [
-    ".credit_card_info-section", 
-    "#billingcheckbox", 
-    "label[for=billingcheckbox]", 
-    ".billing_name_address-group",
-    "#crm-submit-buttons"
-  ];
-  if ($payProc.filter(':checked').val() == '5') {
-    jQuery(toHide.join(', ')).hide();
-  }
+  var $payProc = CRM.$('input[name=payment_processor]');
+  hideForPaypal(CRM.$);
   $payProc.on('change', function(e) {
-    if ($payProc.filter(':checked').val() == '5') {
-      setTimeout(function() {
-        jQuery(toHide.join(', ')).hide();
-      }, 100);
-    }
+    hideForPaypal(CRM.$);
+  });
+  // For when the payment option is shown after picking an amount
+  $('.price-set-row input').on('change', function() {
+    hideForPaypal(CRM.$);
   });
 
   /* Set up IBAN magic */
