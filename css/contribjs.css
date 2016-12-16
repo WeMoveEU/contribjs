@@ -30,10 +30,16 @@ legend {
 #crm-container.crm-public .label,
 #crm-container.crm-public .content {
   padding: .2em .6em;
-  line-height: 1.8em;
+  line-height: 2.8em;
+}
+.price_set-section {
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: #f5f5f5;
 }
 #crm-container.crm-public .price-set-row {
   display: inline-block;
+  font-size: 1.2em;
 }
 #crm-container.crm-public .price-set-row input {
   display: none;
