@@ -258,6 +258,8 @@ jQuery(function($) {
   // When recurring is enabled, select it and hide it
   jQuery("#is_recur").attr("checked","checked");
   jQuery(".is_recur-section").hide();
+  // Change the submit icon for a "secure" lock
+  $('.crm-submit-buttons .glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-lock');
 
   // Use phone friendly field types
   jQuery('#email-5').attr('type', 'email');
