@@ -257,6 +257,11 @@ jQuery(function($) {
   //Hide everything other than amount until one is selected
   if ($('.price-set-row input').filter(':checked').length == 0) {
     $('.crm-group, #billing-payment-block, .email-5-section, .crm-submit-buttons').hide();
+    CRM.$(function($) {
+      setTimeout(function () { //Counter-hack Civi mess
+	$('.crm-group.payment_options-group').hide();
+      }, 100);
+    });
     $('.price-set-row input').on('change', function(e) {
       $('.crm-group, #billing-payment-block, .email-5-section, .crm-submit-buttons').show();
     });
