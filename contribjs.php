@@ -128,9 +128,11 @@ function contribjs_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
  */
 function contribjs_civicrm_preProcess($formName, &$form) {
   if (in_array($formName, array('CRM_Contribute_Form_Contribution_Main'))) {
-    CRM_Core_Resources::singleton()->addScriptFile('eu.wemove.contribjs', 'js/contribjs.js');
-    CRM_Core_Resources::singleton()->addStyleFile('eu.wemove.contribjs', 'css/contribjs.css');
+    CRM_Core_Resources::singleton()
+      ->addScriptFile('eu.wemove.contribjs', 'js/contribjs.js')
+      ->addStyleFile('eu.wemove.contribjs', 'css/contribjs.css',10,'page-header');
   }
+
   if (in_array($formName, array('CRM_Contribute_Form_Contribution_ThankYou'))) {
     CRM_Core_Resources::singleton()->addScriptFile('eu.wemove.contribjs', 'js/thankyou.js');
   }

@@ -73,3 +73,13 @@ nav.navbar-default { /* Speakout header */
     margin-left: auto;
   }
 }
+
+.crm-contribution-main-form-block .custom_pre_profile-group fieldset, .crm-container fieldset.billing_name_address-group {
+  border: 0px;
+  margin:0;
+  padding:0;
+}
+
+.crm-contribution-main-form-block .custom_pre_profile-group legend, .crm-container fieldset.billing_name_address-group legend {
+  display:none;
+}
