@@ -220,10 +220,21 @@ function hideForPaypal($) {
   }
 }
 
+function prettifyPaymentSelector($) {
+  //replace the radio buttons by real buttons
+  $('.payment_processor-section .content input').hide();
+  $('.payment_processor-section .content label').wrap("<a class='btn btn-lg btn-primary'></a>");
+  $("label[for='CIVICRM_QFID_1_payment_processor']").prepend('<span class="glyphicon glyphicon-credit-card">&nbsp;</span>');
+  $("label[for='CIVICRM_QFID_3_payment_processor']").prepend('<span class="badge" title="SEPA">S&euro;PA</span>&nbsp;');
+  $("input[name='payment_processor']").change(function(){$('.payment_processor-section .content a.btn').removeClass('btn-info').addClass('btn-primary');$("label[for='"+$(this).attr('id')+"']").parent().removeClass('btn-primary').addClass("btn-info")});
+  $("label[for='"+$("input[name='payment_processor']:checked").prop('id')+"']").parent().addClass("btn-info").removeClass('btn-primary');
+}
+
 jQuery(function($) {
   // Set earlier in a drupal block
   var contribConfig = window.contribConfig || {};
 
+  prettifyPaymentSelector($);
   // set default amount based on param donation_amount in url
   var name = 'donation_amount';
   var da = getParam(name);
@@ -255,16 +266,18 @@ jQuery(function($) {
     }
   });
   //Hide everything other than amount until one is selected
-  if ($('.price-set-row input').filter(':checked').length == 0) {
-    CRM.$(function($) {
-      setTimeout(function () { //Counter-hack Civi mess
-	$('.crm-group, #billing-payment-block, .email-5-section, .crm-submit-buttons, #footer_text').hide();
-      }, 100);
-    });
-    $('.price-set-row input').on('change', function(e) {
-      $('.crm-group, #billing-payment-block, .email-5-section, .crm-submit-buttons, #footer_text').show();
-    });
-  }
+// Not for now, we need to find a way to show a next button, or something
+//  if ($('.price-set-row input').filter(':checked').length == 0) {
+//    CRM.$(function($) {
+//      setTimeout(function () { //Counter-hack Civi mess
+//	$('.crm-group, #billing-payment-block, .email-5-section, .crm-submit-buttons, #footer_text').hide();
+//      }, 100);
+//    });
+//    $('.price-set-row input').on('change', function(e) {
+//      $('.crm-group, #billing-payment-block, .email-5-section, .crm-submit-buttons, #footer_text').show();
+//    });
+//  }
+
   // Pages are either one-off-only or recurring-only
   // When recurring is enabled, select it and hide it
   jQuery("#is_recur").attr("checked","checked");

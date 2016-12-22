@@ -14,6 +14,15 @@ nav.navbar-default { /* Speakout header */
   margin-bottom: 3em;
 }
 
+#crm-container a.btn {
+  color:white;
+  cursor:pointer;
+}
+
+a.btn label {
+  cursor:pointer;
+}
+
 #crm-container #intro_text.intro_text-section {
   margin-bottom: 1em;
 }
