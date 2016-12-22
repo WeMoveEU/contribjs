@@ -1,7 +1,7 @@
 .region-content {
   font-family: 'Open Sans', sans-serif;
 }
-#page-header, footer.footer {
+#page-header, footer.footer, #speakout-header {
   display: none;
 }
 .language-switcher-locale-url {
@@ -9,6 +9,9 @@
 }
 legend {
   margin: 10px 0;
+}
+nav.navbar-default { /* Speakout header */
+  margin-bottom: 3em;
 }
 
 #crm-container #intro_text.intro_text-section {

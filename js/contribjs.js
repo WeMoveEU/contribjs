@@ -278,6 +278,16 @@ jQuery(function($) {
   jQuery('#credit_card_number').attr('type', 'tel');
   jQuery('#cvv2').attr('type', 'tel');
 
+  //Variations
+  var utm_content = getParam('utm_content');
+  if (utm_content == 'NH') { //No Header
+    $('.navbar-wrapper').hide();
+    $('.main-container').css({"margin-top": "20px"});
+  }
+  else if (utm_content == 'SH') { //Speakout header
+    $('.navbar-wrapper').html($('#speakout-header').remove().html());
+  }
+
   //Avoid stripe mixing up with other payment processors
   jQuery('form#Main').after('<input type="hidden" id="stripe-id" value="1" />');
 
