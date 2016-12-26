@@ -133,7 +133,7 @@ function contribjs_civicrm_preProcess($formName, &$form) {
       ->addStyleFile('eu.wemove.contribjs', 'css/contribjs.css',10,'page-header');
   }
 
-  if (in_array($formName, array('CRM_Contribute_Form_Contribution_ThankYou'))) {
+  if (in_array($formName, array('CRM_Contribute_Form_Contribution_ThankYou', 'CRM_Contribute_Form_Contribution_Confirm'))) {
     CRM_Core_Resources::singleton()->addScriptFile('eu.wemove.contribjs', 'js/thankyou.js');
   }
 }
