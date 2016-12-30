@@ -226,7 +226,10 @@ function prettifyPaymentSelector($) {
   $('.payment_processor-section .content label').wrap("<a class='btn btn-lg btn-primary'></a>");
   $("label[for='CIVICRM_QFID_1_payment_processor']").prepend('<span class="glyphicon glyphicon-credit-card">&nbsp;</span>');
   $("label[for='CIVICRM_QFID_3_payment_processor']").prepend('<span class="badge" title="SEPA">S&euro;PA</span>&nbsp;');
-  $("input[name='payment_processor']").change(function(){$('.payment_processor-section .content a.btn').removeClass('btn-info').addClass('btn-primary');$("label[for='"+$(this).attr('id')+"']").parent().removeClass('btn-primary').addClass("btn-info")});
+  $("input[name='payment_processor']").change(function(){
+    $('.payment_processor-section .content a.btn').removeClass('btn-info').addClass('btn-primary');
+    $("label[for='"+$(this).attr('id')+"']").parent().removeClass('btn-primary').addClass("btn-info");
+  });
   $("label[for='"+$("input[name='payment_processor']:checked").prop('id')+"']").parent().addClass("btn-info").removeClass('btn-primary');
 }
 
@@ -393,5 +396,21 @@ jQuery(function($) {
   });
   /* pre-fill billing with frozen fields */
   copyFrozenFields();
+  /* pre-fill billing when main fields are changed */
+  // This is done by Civi, but not reset when the user changes the payment processor
+  $payProc.on('change', function() {
+    if ($payProc.filter(':checked').val() == '1') {
+      $.each(fields, function(k, f) {
+        $('#'+f).on('change', function() {
+          $('#billing_'+f).val(this.value);
+        });
+      });
+      setTimeout(function() {
+	$.each(fields, function(k, f) {
+	  $('#'+f).change();
+	});
+      }, 100);
+    }
+  });
 
 });
