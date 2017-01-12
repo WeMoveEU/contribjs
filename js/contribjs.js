@@ -1,4 +1,9 @@
 
+ContribJS = {
+  mandastar: '<span class="crm-marker">*</span>',
+  mandastarForBilling: '<span class="crm-marker">*</span>',
+};
+
 function getParam(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
