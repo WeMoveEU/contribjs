@@ -3,6 +3,11 @@ ContribJS = {
   mandastar: '<span class="crm-marker">*</span>',
   mandastarForBilling: '<span class="crm-marker">*</span>',
 
+  /* To be agnostic of input name, as it differs with CiviCRM version... */
+  paymentProcessors: function($) {
+    return $('input[name=payment_processor]');
+  },
+
   translate: function($, t) {
     $.each(t.static, function( key, value ) {
       $(key).html(value);
@@ -10,7 +15,8 @@ ContribJS = {
     $.each(t.dynamic, function( key, value ) {
       $(key).html(value);
     });
-    $('input[name=payment_processor]').on('change', function() {
+ 
+    this.paymentProcessors($).on('change', function() {
       $.each(t.dynamic, function( key, value ) {
 	$(key).html(value);
       });
@@ -231,7 +237,7 @@ function hideForPaypal($) {
     ".billing_name_address-group",
     "#crm-submit-buttons"
   ];
-  var $payProc = $('input[name=payment_processor]');
+  var $payProc = ContribJS.paymentProcessors($);
   if ($payProc.filter(':checked').val() == '5') {
     setTimeout(function() {
       $(toHide.join(', ')).hide();
@@ -245,11 +251,11 @@ function prettifyPaymentSelector($) {
   $('.payment_processor-section .content label').wrap("<a class='btn btn-lg btn-primary'></a>");
   $("label[for='CIVICRM_QFID_1_payment_processor']").prepend('<span class="glyphicon glyphicon-credit-card">&nbsp;</span>');
   $("label[for='CIVICRM_QFID_3_payment_processor']").prepend('<span class="badge" title="SEPA">S&euro;PA</span>&nbsp;');
-  $("input[name='payment_processor']").change(function(){
+  ContribJS.paymentProcessors($).change(function(){
     $('.payment_processor-section .content a.btn').removeClass('btn-info').addClass('btn-primary');
     $("label[for='"+$(this).attr('id')+"']").parent().removeClass('btn-primary').addClass("btn-info");
   });
-  $("label[for='"+$("input[name='payment_processor']:checked").prop('id')+"']").parent().addClass("btn-info").removeClass('btn-primary');
+  $("label[for='"+ContribJS.paymentProcessors($).filter(":checked").prop('id')+"']").parent().addClass("btn-info").removeClass('btn-primary');
 }
 
 jQuery(function($) {
@@ -366,7 +372,7 @@ jQuery(function($) {
 
 
   /* Hide CC fields for paypal */
-  var $payProc = CRM.$('input[name=payment_processor]');
+  var $payProc = ContribJS.paymentProcessors(CRM.$);
   hideForPaypal(CRM.$);
   $payProc.on('change', function(e) {
     hideForPaypal(CRM.$);
