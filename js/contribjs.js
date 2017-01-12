@@ -2,6 +2,20 @@
 ContribJS = {
   mandastar: '<span class="crm-marker">*</span>',
   mandastarForBilling: '<span class="crm-marker">*</span>',
+
+  translate: function($, t) {
+    $.each(t.static, function( key, value ) {
+      $(key).html(value);
+    });
+    $.each(t.dynamic, function( key, value ) {
+      $(key).html(value);
+    });
+    $('input[name=payment_processor]').on('change', function() {
+      $.each(t.dynamic, function( key, value ) {
+	$(key).html(value);
+      });
+    });
+  }
 };
 
 function getParam(name) {
