@@ -12,6 +12,11 @@ ContribJS = {
   paymentProcessors: function($) {
     return $('input[name=payment_processor]');
   },
+  switchPayment: function($, paymentName) {
+    var $input = $('#'+this.paymentProcessorsIds[paymentName]);
+    $input.click();
+    buildPaymentBlock($input.val());
+  },
 
   translate: function($, t) {
     $.each(t.static, function( key, value ) {
