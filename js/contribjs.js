@@ -2,8 +2,13 @@
 ContribJS = {
   mandastar: '<span class="crm-marker">*</span>',
   mandastarForBilling: '<span class="crm-marker">*</span>',
-
+  
   /* To be agnostic of input name, as it differs with CiviCRM version... */
+  paymentProcessorsIds: {
+    card: 'CIVICRM_QFID_1_payment_processor',
+    sepa: 'CIVICRM_QFID_3_payment_processor',
+    paypal: 'CIVICRM_QFID_5_payment_processor'
+  },
   paymentProcessors: function($) {
     return $('input[name=payment_processor]');
   },
@@ -249,8 +254,8 @@ function prettifyPaymentSelector($) {
   //replace the radio buttons by real buttons
   $('.payment_processor-section .content input').hide();
   $('.payment_processor-section .content label').wrap("<a class='btn btn-lg btn-primary'></a>");
-  $("label[for='CIVICRM_QFID_1_payment_processor']").prepend('<span class="glyphicon glyphicon-credit-card">&nbsp;</span>');
-  $("label[for='CIVICRM_QFID_3_payment_processor']").prepend('<span class="badge" title="SEPA">S&euro;PA</span>&nbsp;');
+  $("label[for="+ContribJS.paymentProcessorsIds.card+"]").prepend('<span class="glyphicon glyphicon-credit-card">&nbsp;</span>');
+  $("label[for="+ContribJS.paymentProcessorsIds.sepa+"]").prepend('<span class="badge" title="SEPA">S&euro;PA</span>&nbsp;');
   ContribJS.paymentProcessors($).change(function(){
     $('.payment_processor-section .content a.btn').removeClass('btn-info').addClass('btn-primary');
     $("label[for='"+$(this).attr('id')+"']").parent().removeClass('btn-primary').addClass("btn-info");
