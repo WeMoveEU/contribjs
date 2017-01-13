@@ -373,7 +373,6 @@ jQuery(function($) {
     jQuery(this).val(jQuery(this).val().replace(/,/g,"."));
   });
 
-
   /* Hide CC fields for paypal */
   CRM.$('#billing-payment-block').on('crmLoad', function(e) {
     hideForPaypal(CRM.$);
@@ -384,18 +383,17 @@ jQuery(function($) {
   });
 
   /* Set up IBAN magic */
+  var $payProc = ContribJS.paymentProcessors($);
   if (isIBANConverted(contribConfig.pageId)) {
     jQuery('input[value=SEPA]').parent().parent().hide();
     if (jQuery('.direct_debit_info-group').length) {
       var country = readCountry(contribConfig);
       enableNationalForm(country);
     }
-    $payProc.on('change', function(e) {
+    CRM.$('#billing-payment-block').on('crmLoad', function(e) {
       if ($payProc.filter(':checked').val() == '3') {
-        setTimeout(function() {
-          var country = readCountry(contribConfig);
-          enableNationalForm(country);
-        }, 100);
+	var country = readCountry(contribConfig);
+	enableNationalForm(country);
       }
     });
     CRM.$(function($) {
@@ -424,18 +422,13 @@ jQuery(function($) {
   copyFrozenFields();
   /* pre-fill billing when main fields are changed */
   // This is done by Civi, but not reset when the user changes the payment processor
-  $payProc.on('change', function() {
+  CRM.$('#billing-payment-block').on('crmLoad', function(e) {
     if ($payProc.filter(':checked').val() == '1') {
       $.each(fields, function(k, f) {
         $('#'+f).on('change', function() {
           $('#billing_'+f).val(this.value);
-        });
+        }).change();
       });
-      setTimeout(function() {
-	$.each(fields, function(k, f) {
-	  $('#'+f).change();
-	});
-      }, 100);
     }
   });
 
