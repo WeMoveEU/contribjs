@@ -15,7 +15,7 @@ ContribJS = {
   switchPayment: function($, paymentName) {
     var $input = $('#'+this.paymentProcessorsIds[paymentName]);
     $input.click();
-    buildPaymentBlock($input.val());
+    setTimeout(function() { $input.trigger('change.paymentBlock'); }, 100);
   },
 
   translate: function($, t) {
