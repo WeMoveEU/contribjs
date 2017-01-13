@@ -240,18 +240,12 @@ function copyFrozenFields() {
 }
 
 function hideForPaypal($) {
-  var toHide = [
-    ".credit_card_info-section", 
-    "#billingcheckbox", 
-    "label[for=billingcheckbox]", 
-    ".billing_name_address-group",
-    "#crm-submit-buttons"
-  ];
   var $payProc = ContribJS.paymentProcessors($);
   if ($payProc.filter(':checked').val() == '5') {
-    setTimeout(function() {
-      $(toHide.join(', ')).hide();
-    }, 100);
+    $('#billing-payment-block').addClass('paypal');
+    $("#crm-submit-buttons").hide();
+  } else {
+    $('#billing-payment-block').removeClass('paypal');
   }
 }
 

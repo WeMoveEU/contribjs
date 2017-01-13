@@ -74,6 +74,11 @@ a.btn label {
   text-align: center;
 }
 
+.paypal .credit_card_info-section, 
+.paypal .billing_name_address-group {
+  display: none;
+}
+
 @media screen and (max-width:767px) {
   .crm-container .crm-section .label {
     float: none;
