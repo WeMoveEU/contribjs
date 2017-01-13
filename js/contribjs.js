@@ -241,11 +241,10 @@ function copyFrozenFields() {
 
 function hideForPaypal($) {
   var $payProc = ContribJS.paymentProcessors($);
-  if ($payProc.filter(':checked').val() == '5') {
-    $('#billing-payment-block').addClass('paypal');
-    $("#crm-submit-buttons").hide();
-  } else {
-    $('#billing-payment-block').removeClass('paypal');
+  var isPaypal = $payProc.filter(':checked').val() == '5';
+  $('#crm-main-content-wrapper').toggleClass('paypal', isPaypal);
+  if (isPaypal) {
+    $('#crm-submit-buttons').hide();
   }
 }
 
@@ -376,9 +375,7 @@ jQuery(function($) {
 
 
   /* Hide CC fields for paypal */
-  var $payProc = ContribJS.paymentProcessors(CRM.$);
-  hideForPaypal(CRM.$);
-  $payProc.on('change', function(e) {
+  CRM.$('#billing-payment-block').on('crmLoad', function(e) {
     hideForPaypal(CRM.$);
   });
   // For when the payment option is shown after picking an amount
