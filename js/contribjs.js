@@ -26,7 +26,7 @@ ContribJS = {
       $(key).html(value);
     });
  
-    this.paymentProcessors($).on('change', function() {
+    CRM.$('#billing-payment-block').on('crmLoad', function(e) {
       $.each(t.dynamic, function( key, value ) {
 	$(key).html(value);
       });
