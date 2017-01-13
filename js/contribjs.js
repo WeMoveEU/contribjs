@@ -1,8 +1,8 @@
 
 ContribJS = {
   mandastar: '<span class="crm-marker">*</span>',
-  mandastarForBilling: '<span class="crm-marker">*</span>',
-  
+  mandastarForBilling: '',
+
   /* To be agnostic of input name, as it differs with CiviCRM version... */
   paymentProcessorsIds: {
     card: 'CIVICRM_QFID_1_payment_processor',
