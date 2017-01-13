@@ -5,12 +5,12 @@ ContribJS = {
 
   /* To be agnostic of input name, as it differs with CiviCRM version... */
   paymentProcessorsIds: {
-    card: 'CIVICRM_QFID_1_payment_processor',
-    sepa: 'CIVICRM_QFID_3_payment_processor',
-    paypal: 'CIVICRM_QFID_5_payment_processor'
+    card: 'CIVICRM_QFID_1_payment_processor_id',
+    sepa: 'CIVICRM_QFID_3_payment_processor_id',
+    paypal: 'CIVICRM_QFID_5_payment_processor_id'
   },
   paymentProcessors: function($) {
-    return $('input[name=payment_processor]');
+    return $('input[name=payment_processor_id]');
   },
   switchPayment: function($, paymentName) {
     var $input = $('#'+this.paymentProcessorsIds[paymentName]);
