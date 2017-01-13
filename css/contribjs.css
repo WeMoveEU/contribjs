@@ -73,6 +73,9 @@ a.btn label {
 .crm-submit-buttons {
   text-align: center;
 }
+.crm-submit-buttons input.crm-form-submit {
+  border: 0;
+}
 
 .paypal .credit_card_info-section, 
 .paypal .billing_name_address-group {
