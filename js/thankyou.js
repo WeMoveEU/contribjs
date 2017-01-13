@@ -3,16 +3,6 @@
 function readPageId() {
   return undefined;
 }
-
-function readLanguage() {
-  var lang = location.pathname.substr(1, 3);
-  if (lang.endsWith('/')) {
-    lang = lang.substr(0, 2);
-  } else {
-    lang = 'gb';
-  }
-  return lang;
-}
 //END HOTFIX
 
 jQuery(function($) {
