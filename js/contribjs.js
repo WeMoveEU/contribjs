@@ -258,6 +258,8 @@ function prettifyPaymentSelector($) {
     $('.payment_processor-section .content a.btn').removeClass('btn-info').addClass('btn-primary');
     $("label[for='"+$(this).attr('id')+"']").parent().removeClass('btn-primary').addClass("btn-info");
   });
-  $("label[for='"+ContribJS.paymentProcessors($).filter(":checked").prop('id')+"']").parent().addClass("btn-info").removeClass('btn-primary');
+  //Using :checked filter would work if the CRM was not tampering with it on load
+  //Filtering on attribute works around this
+  $("label[for='"+ContribJS.paymentProcessors($).filter("[checked=checked]").attr('id')+"']").parent().addClass("btn-info").removeClass('btn-primary');
 }
 
