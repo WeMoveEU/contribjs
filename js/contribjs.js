@@ -245,6 +245,9 @@ function hideForPaypal($) {
   $('#crm-main-content-wrapper').toggleClass('paypal', isPaypal);
   if (isPaypal) {
     $('#crm-submit-buttons').hide();
+    //Bug in AJAX call to generate paypal section: the button name does not match the form name
+    //This prevents Civi from recognizing an express payment
+    $('#_qf_Payment_upload_express').attr('name', '_qf_Main_upload_express');
   }
 }
 
