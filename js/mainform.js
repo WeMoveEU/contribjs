@@ -116,7 +116,9 @@ jQuery(function($) {
     hideForPaypal(CRM.$);
   });
   // For when the payment option is shown after picking an amount
-  $('.price-set-row input').on('change', function() {
+  $('.price-set-row input, .other_amount-section input').on('change', function() {
+    //The amount of shit we have to do to work around Civi's shit is insane
+    ContribJS.paymentProcessors($).filter("[checked=checked]").prop('checked', true);
     hideForPaypal(CRM.$);
   });
 
