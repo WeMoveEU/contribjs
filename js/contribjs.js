@@ -13,8 +13,9 @@ ContribJS = {
     return $('input[name=payment_processor_id]');
   },
   switchPayment: function($, paymentName) {
+    this.paymentProcessors($).removeAttr('checked');
     var $input = $('#'+this.paymentProcessorsIds[paymentName]);
-    $input.click();
+    $input.attr('checked', 'checked').click();
     setTimeout(function() { $input.trigger('change.paymentBlock'); }, 100);
   },
 
@@ -263,6 +264,10 @@ function prettifyPaymentSelector($) {
   });
   //Using :checked filter would work if the CRM was not tampering with it on load
   //Filtering on attribute works around this
-  $("label[for='"+ContribJS.paymentProcessors($).filter("[checked=checked]").attr('id')+"']").parent().addClass("btn-info").removeClass('btn-primary');
+  $checked = ContribJS.paymentProcessors($).filter(":checked");
+  if (!$checked.length) {
+    $checked = ContribJS.paymentProcessors($).filter("[checked=checked]");
+  }
+  $("label[for='"+$checked.attr('id')+"']").parent().addClass("btn-info").removeClass('btn-primary');
 }
 
