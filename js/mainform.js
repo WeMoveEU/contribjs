@@ -46,6 +46,8 @@ jQuery(function($) {
 //    });
 //  }
 
+  ContribJS.setUpABTest($);
+
   // Pages are either one-off-only or recurring-only
   // When recurring is enabled, select it and hide it
   jQuery("#is_recur").attr("checked","checked");

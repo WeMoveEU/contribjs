@@ -29,10 +29,64 @@ ContribJS = {
  
     CRM.$('#billing-payment-block').on('crmLoad', function(e) {
       $.each(t.dynamic, function( key, value ) {
-	$(key).html(value);
+        $(key).html(value);
       });
     });
+  },
+
+  abVariants: {
+    'dev': {
+      'a': function() {
+        console.info("Activating dev a");
+      },
+      'b': function() {
+        console.info("Activating dev b");
+      }
+    }
+  },
+
+  setUpABTest: function($) {
+    $ab = $('[ab-test]');
+    if ($ab.length) {
+      var testName = $ab.attr('ab-test');
+      var experiment = new AlephBet.Experiment({
+        name: testName,
+        variants: ContribJS.makeABVariants($, testName),
+        tracking_adapter: ContribJS.abTracker
+      });
+      $("fieldset[class*='AB_TESTING']").hide();
+    }
+  },
+
+  makeABVariants: function($, testName) {
+    var result = {};
+    var variants = ContribJS.abVariants[testName];
+    Object.keys(variants).forEach(function(variant) {
+      result[variant] = {
+        activate: function() {
+          variants[variant]();
+          $('input[data-crm-custom="donor_extra_information:ab_testing"]').val(testName);
+          $('input[data-crm-custom="donor_extra_information:ab_variant"]').val(variant);
+        }
+      };
+    });
+    return result;
+  },
+
+  abTracker: {
+    _track: function(category, action, label, value) {
+      if (typeof ga == 'function') {
+        return ga('send', 'event', category, action, label, value);
+      }
+    },
+    experiment_start: function(experiment_name, variant) {
+      return this._track(this.namespace, experiment_name, variant + " | views");
+    },
+    goal_complete: function(experiment_name, variant, event_name) {
+      return this._track(this.namespace, experiment_name, variant + " | goal | " + event_name);
+    }
   }
+
 };
 
 function getParam(name) {
@@ -49,7 +103,7 @@ function readPageId() {
     var classes = $mainBlock.attr('class').split(' ');
     for (var c=0; c<classes.length; c++) {
       if (classes[c].startsWith('crm-contribution-page-id-')) {
-	return parseInt(classes[c].substr(25));
+        return parseInt(classes[c].substr(25));
       }
     }
   }
