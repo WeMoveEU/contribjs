@@ -46,6 +46,15 @@ ContribJS = {
     },
     'default-sepa': {
       'direct-debit': function() { ContribJS.switchPayment(CRM.$, 'sepa'); }
+    },
+    'show-element': function($) {
+      var variants = {};
+      $('[ab-show-element]').each(function(i, el) {
+        var $el = $(el);
+        var variant = $el.attr('ab-show-element');
+        variants[variant] = function() { $el.show(); };
+      });
+      return variants;
     }
   },
 
