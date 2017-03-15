@@ -39,14 +39,17 @@ ContribJS = {
       'a': function() { console.info("Activating dev a"); },
       'b': function() { console.info("Activating dev b"); }
     },
+    //Random pre-selection of the payment processor
     'preselected-processor': {
       'credit-card':  function() { ContribJS.switchPayment(CRM.$, 'card'); },
       'paypal':       function() { ContribJS.switchPayment(CRM.$, 'paypal'); },
       'direct-debit': function() { ContribJS.switchPayment(CRM.$, 'sepa'); }
     },
+    //Force pre-selection of SEPA payment processor
     'default-sepa': {
       'direct-debit': function() { ContribJS.switchPayment(CRM.$, 'sepa'); }
     },
+    //Generic variant generator to pick one among several hidden HTML elements, and show it.
     'show-element': function($) {
       var variants = {};
       $('[ab-show-element]').each(function(i, el) {
