@@ -55,17 +55,24 @@ ContribJS = {
       var testId = $ab.attr('ab-test');
       var experiment = new AlephBet.Experiment({
         name: testId,
-        variants: ContribJS.makeABVariants($, testId, $ab.attr('name')),
+        variants: ContribJS.makeABVariants($, testId, $ab.attr('name'), $ab.attr('ab-noop')),
         tracking_adapter: ContribJS.abTracker
       });
       $("fieldset[class*='AB_TESTING']").hide();
     }
   },
 
-  makeABVariants: function($, testId, testName) {
-    var result = {};
+  makeABVariants: function($, testId, testName, noop) {
     var variants = ContribJS.abVariants[testId];
     var testName = testName || testId;
+    if (typeof variants === 'function') {
+      variants = variants($);
+    }
+    if (noop) {
+      variants[noop] = function() {};
+    }
+
+    var result = {};
     Object.keys(variants).forEach(function(variant) {
       result[variant] = {
         activate: function() {
