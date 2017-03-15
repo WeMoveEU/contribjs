@@ -36,12 +36,16 @@ ContribJS = {
 
   abVariants: {
     'dev': {
-      'a': function() {
-        console.info("Activating dev a");
-      },
-      'b': function() {
-        console.info("Activating dev b");
-      }
+      'a': function() { console.info("Activating dev a"); },
+      'b': function() { console.info("Activating dev b"); }
+    },
+    'preselected-processor': {
+      'credit-card':  function() { ContribJS.switchPayment(CRM.$, 'card'); },
+      'paypal':       function() { ContribJS.switchPayment(CRM.$, 'paypal'); },
+      'direct-debit': function() { ContribJS.switchPayment(CRM.$, 'sepa'); }
+    },
+    'default-sepa': {
+      'direct-debit': function() { ContribJS.switchPayment(CRM.$, 'sepa'); }
     }
   },
 
