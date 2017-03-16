@@ -58,6 +58,10 @@ ContribJS = {
         variants[variant] = function() { $el.show(); };
       });
       return variants;
+    },
+    //Bigger submit button
+    'big-submit': {
+      'yes': function() { CRM.$('#crm-submit-buttons').addClass('ab-big-submit'); }
     }
   },
 

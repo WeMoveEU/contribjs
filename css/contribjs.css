@@ -100,3 +100,18 @@ a.btn label {
 .crm-contribution-main-form-block .custom_pre_profile-group legend, .crm-container fieldset.billing_name_address-group legend {
   display:none;
 }
+
+/* A/B tests styles */
+#crm-submit-buttons.ab-big-submit .btn-primary {
+  padding: 10px 30px;
+}
+#crm-submit-buttons.ab-big-submit .crm-i {
+  font-size: 48px;
+}
+#crm-submit-buttons.ab-big-submit .crm-form-submit {
+  font-size: 24px;
+}
+#crm-container.crm-public #crm-submit-buttons.ab-big-submit {
+  margin-bottom: 60px;
+}
+
