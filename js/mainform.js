@@ -170,4 +170,12 @@ jQuery(function($) {
     }
   });
 
+  $(".crm-form-submit").click(function(){
+    // in some cases, the payment processor is selected, but the radio button isn't. No idea
+    if (!ContribJS.paymentProcessors($).filter(":checked").length) {
+      ContribJS.paymentProcessors($).filter("[checked=checked]").prop('checked', true);
+    }
+  });
+
+
 });

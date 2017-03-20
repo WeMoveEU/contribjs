@@ -9,12 +9,23 @@ ContribJS = {
     sepa: 'CIVICRM_QFID_3_payment_processor_id',
     paypal: 'CIVICRM_QFID_5_payment_processor_id'
   },
+  testpaymentProcessorsIds: {
+    card: 'CIVICRM_QFID_2_payment_processor_id',
+    sepa: 'CIVICRM_QFID_4_payment_processor_id',
+    paypal: 'CIVICRM_QFID_6_payment_processor_id'
+  },
   paymentProcessors: function($) {
     return $('input[name=payment_processor_id]');
   },
   switchPayment: function($, paymentName) {
     this.paymentProcessors($).removeAttr('checked');
     var $input = $('#'+this.paymentProcessorsIds[paymentName]);
+    if ($input.length==0) {
+      console.log ("can't find payment provider, switching to test mode");
+      this.paymentProcessorsIds = this.testpaymentProcessorsIds;
+      $input = $('#'+this.paymentProcessorsIds[paymentName]);
+    }
+    
     $input.attr('checked', 'checked').click();
     setTimeout(function() { $input.trigger('change.paymentBlock'); }, 100);
   },
