@@ -34,6 +34,16 @@ ContribJS = {
     });
   },
 
+  setUtmContent: function($, utm_content) {
+    if (utm_content == 'NH') { //No Header
+      $('.navbar-wrapper').hide();
+      $('.main-container').css({"margin-top": "20px"});
+    }
+    else if (utm_content == 'SH') { //Speakout header
+      $('.navbar-wrapper').html($('#speakout-header').remove().html());
+    }
+  },
+
   abVariants: {
     'dev': {
       'a': function() { console.info("Activating dev a"); },
@@ -62,7 +72,24 @@ ContribJS = {
     //Bigger submit button
     'big-submit': {
       'yes': function() { CRM.$('#crm-submit-buttons').addClass('ab-big-submit'); }
-    }
+    },
+    'utm-content': function($) {
+      $ab = $('[ab-test]');
+      var contents = $ab.attr('ab-contents').split(',');
+      var variants = {};
+      $(contents).each(function(i, content) {
+        switch(content) {
+          case 'NH':
+            var testName = 'no-header'; break;
+          case 'SH':
+            var testName = 'speakout-header'; break;
+          default:
+            var testName = content;
+        }
+        variants[testName] = function() { ContribJS.setUtmContent($, content); };
+      });
+      return variants;
+    },
   },
 
   setUpABTest: function($) {
