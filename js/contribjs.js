@@ -17,15 +17,21 @@ ContribJS = {
   paymentProcessors: function($) {
     return $('input[name=payment_processor_id]');
   },
-  switchPayment: function($, paymentName) {
-    this.paymentProcessors($).removeAttr('checked');
+  getPaymentProcessor: function($, paymentName) {
     var $input = $('#'+this.paymentProcessorsIds[paymentName]);
     if ($input.length==0) {
       console.log ("can't find payment provider, switching to test mode");
       this.paymentProcessorsIds = this.testpaymentProcessorsIds;
       $input = $('#'+this.paymentProcessorsIds[paymentName]);
     }
-    
+    return $input;
+  },
+  isProcessorSelected: function($, paymentName) {
+    return this.getPaymentProcessor($, paymentName).prop('checked');
+  },
+  switchPayment: function($, paymentName) {
+    this.paymentProcessors($).removeAttr('checked');
+    var $input = this.getPaymentProcessor($, paymentName);
     $input.attr('checked', 'checked').click();
     setTimeout(function() { $input.trigger('change.paymentBlock'); }, 100);
   },
@@ -361,8 +367,7 @@ function copyFrozenFields() {
 }
 
 function hideForPaypal($) {
-  var $payProc = ContribJS.paymentProcessors($);
-  var isPaypal = $payProc.filter(':checked').val() == '5';
+  var isPaypal = ContribJS.isProcessorSelected($, 'paypal');;
   $('#crm-main-content-wrapper').toggleClass('paypal', isPaypal);
   if (isPaypal) {
     $('#crm-submit-buttons').hide();
