@@ -36,6 +36,11 @@ ContribJS = {
     setTimeout(function() { $input.trigger('change.paymentBlock'); }, 100);
   },
 
+  setCountry: function($, ctryId) {
+    $("#country-1").val(ctryId).change(function(e){$("#select2-chosen-1").text($("#country-1 option:selected").text());}).trigger("change");
+    $("#s2id_country-1 a").removeClass("select2-default");
+  },
+
   translate: function($, t) {
     $.each(t.static, function( key, value ) {
       $(key).html(value);
