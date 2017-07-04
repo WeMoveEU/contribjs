@@ -179,7 +179,7 @@ function readPageId() {
   if ($mainBlock.length) {
     var classes = $mainBlock.attr('class').split(' ');
     for (var c=0; c<classes.length; c++) {
-      if (classes[c].startsWith('crm-contribution-page-id-')) {
+      if (CRM._.startsWith(classes[c], 'crm-contribution-page-id-')) {
         return parseInt(classes[c].substr(25));
       }
     }
@@ -347,7 +347,7 @@ function updateNationalForm(country) {
 
 function readLanguage() {
   var lang = location.pathname.substr(1, 3);
-  if (lang.endsWith('/')) {
+  if (CRM._.endsWith(lang, '/')) {
     lang = lang.substr(0, 2);
   } else {
     lang = 'gb';
