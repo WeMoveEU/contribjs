@@ -69,37 +69,37 @@ jQuery(function($) {
   jQuery('form#Main').after('<input type="hidden" id="stripe-id" value="1" />');
 
   // Black magic to display a monthly donation as a weekly one
-  if (isConvertedToMonthly()) {
-    var $monthlyInfo = jQuery(
+  if (ContribJS.isPseudoWeekly()) {
+    var $monthlyInfo = $(
         '<div class="crm-section">'
       +  '<div class="label"></div>'
       +  '<div class="content" id="monthlyInfo">' + contribConfig.translations['monthlyInfo'] + '</div>'
       +  '<div class="clear"></div>'
       + '</div>'
     );
-    var $monthlyOther = jQuery('.price-set-row input[value=0]').clone();
-    var $monthlyInput = jQuery('.other_amount-section input').clone();
-    var priceSetName = jQuery('.price-set-row input').attr('name');
-    jQuery('.price-set-row input').attr('name', priceSetName + '__');
-    jQuery('.other_amount-section input').attr('name', priceSetName + '_other');
-    jQuery('.other_amount-section').after($monthlyInfo);
-    $monthlyOther.prop('checked', 'checked').prop('id', 'monthlyOther').hide();
-    $monthlyInput.prop('id', 'monthlyInput').hide(); 
-    $monthlyInfo.after($monthlyInput);
-    $monthlyInfo.after($monthlyOther);
+    $('.other_amount-section').after($monthlyInfo);
 
-    jQuery('.price-set-row input').on('change', function(e) {
-      updateMonthlyValue();
-    });
-    jQuery('.other_amount-section input').on('keyup', function(e) {
-      updateMonthlyValue();
-    });
-    if (jQuery('.crm-error').length) {
-      var amount = parseFloat (jQuery(".other_amount-content input[name*=price]").val());
-      var monthlyValue = (amount / 4.3).toFixed(2);
-      jQuery('.other_amount-content input[name*=price]').val(monthlyValue);
+    if (ContribJS.isConvertedToMonthly()) {
+      var $monthlyOther = $('.price-set-row input[value=0]').clone();
+      var $monthlyInput = $('.other_amount-section input').clone();
+      var priceSetName = $('.price-set-row input').attr('name');
+      $('.price-set-row input').attr('name', priceSetName + '__');
+      $('.other_amount-section input').attr('name', priceSetName + '_other');
+      $monthlyOther.prop('checked', 'checked').prop('id', 'monthlyOther').hide();
+      $monthlyInput.prop('id', 'monthlyInput').hide(); 
+      $monthlyInfo.after($monthlyInput);
+      $monthlyInfo.after($monthlyOther);
+
+      if ($('.crm-error').length) {
+        var amount = parseFloat (jQuery(".other_amount-content input[name*=price]").val());
+        var monthlyValue = (amount / 4.3).toFixed(2);
+        $('.other_amount-content input[name*=price]').val(monthlyValue);
+      }
     }
-    updateMonthlyValue();
+
+    $('.price-set-row input').on('change', ContribJS.updateMonthlyValue);
+    $('.other_amount-section input').on('keyup', ContribJS.updateMonthlyValue);
+    ContribJS.updateMonthlyValue();
   }
 
   /* Converting comma to dot in other amount field */

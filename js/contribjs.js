@@ -162,8 +162,39 @@ ContribJS = {
     goal_complete: function(experiment_name, variant, event_name) {
       return this._track(this.namespace, experiment_name, variant + " | goal | " + event_name);
     }
-  }
+  },
 
+  isConvertedToMonthly: function() {
+    var weeklyPages = contribConfig.weeklyPages || [];
+    return weeklyPages.indexOf(contribConfig.pageId) >= 0;
+  },
+
+  isPseudoWeekly: function() {
+    var isWeekly = CRM.$('input[name=frequency_unit]').val() == 'week';
+    return isWeekly || this.isConvertedToMonthly();
+  },
+
+  getMonthlyValue: function() {
+    var $montlyInfo = CRM.$('#monthlyInfo');
+    var amount = CRM.$('.price-set-row input').filter(':checked').attr('data-amount');
+    if (amount) {
+      amount = parseFloat(amount);
+    } else {
+      amount = parseFloat(CRM.$('.other_amount-section input').val());
+    }
+    if (isNaN(amount)) {
+      var monthlyValue = '';
+    } else {
+      var monthlyValue = (amount * 4.3).toFixed(2);
+    }
+    return monthlyValue;
+  },
+
+  updateMonthlyValue: function() {
+    var monthlyValue = ContribJS.getMonthlyValue();
+    CRM.$('#monthlyValue').text(monthlyValue);
+    CRM.$('#monthlyInput').val(monthlyValue);
+  },
 };
 
 function getParam(name) {
@@ -192,34 +223,12 @@ function isRecurring() {
   return jQuery('#is_recur').length > 0;
 }
 function isConvertedToMonthly() {
-  var weeklyPages = contribConfig.weeklyPages || [];
-  return weeklyPages.indexOf(contribConfig.pageId) >= 0;
+  return ContribJS.isConvertedToMonthly();
 }
 function isPlainMonthly() {
-  return isRecurring() && !isConvertedToMonthly();
+  return isRecurring() && !ContribJS.isConvertedToMonthly();
 }
 
-function getMonthlyValue() {
-  var $montlyInfo = jQuery('#monthlyInfo');
-  var amount = jQuery('.price-set-row input').filter(':checked').attr('data-amount');
-  if (amount) {
-    amount = parseFloat(amount);
-  } else {
-    amount = parseFloat(jQuery('.other_amount-section input').val());
-  }
-  if (isNaN(amount)) {
-    var monthlyValue = '';
-  } else {
-    var monthlyValue = (amount * 4.3).toFixed(2);
-  }
-  return monthlyValue;
-}
-
-function updateMonthlyValue() {
-  var monthlyValue = getMonthlyValue();
-  jQuery('#monthlyValue').text(monthlyValue);
-  jQuery('#monthlyInput').val(monthlyValue);
-}
 
 
 
