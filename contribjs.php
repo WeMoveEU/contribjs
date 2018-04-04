@@ -133,6 +133,7 @@ function contribjs_civicrm_preProcess($formName, &$form) {
     'CRM_Contribute_Form_Contribution_Confirm'))) {
 
     CRM_Core_Resources::singleton()->addScriptFile('eu.wemove.contribjs', 'js/contribjs.js');
+    CRM_Core_Resources::singleton()->addScriptFile('eu.wemove.contribjs','js/alephbet-0.6.0.mod.js');
   }
 
   if (in_array($formName, array('CRM_Contribute_Form_Contribution_Main'))) {
