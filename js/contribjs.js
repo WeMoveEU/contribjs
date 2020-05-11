@@ -14,6 +14,16 @@ ContribJS = {
     sepa: 'CIVICRM_QFID_4_payment_processor_id',
     paypal: 'CIVICRM_QFID_6_payment_processor_id'
   },
+  ppIds: {
+    card: 1,
+    sepa: 3,
+    paypal: 5
+  },
+  testppIds: {
+    card: 2,
+    sepa: 4,
+    paypal: 6
+  },
   paymentProcessors: function($) {
     return $('input[name=payment_processor_id]');
   },
@@ -34,6 +44,11 @@ ContribJS = {
     var $input = this.getPaymentProcessor($, paymentName);
     $input.attr('checked', 'checked').click();
     setTimeout(function() { $input.trigger('change.paymentBlock'); }, 100);
+  },
+
+  isSingleType: function($, paymentName) {
+    $pp = this.paymentProcessors($);
+    return $pp.attr('type') == 'hidden' && $pp.val() == this.ppIds[paymentName];
   },
 
   setCountry: function($, ctryId) {
@@ -381,7 +396,7 @@ function copyFrozenFields() {
 }
 
 function hideForPaypal($) {
-  var isPaypal = ContribJS.isProcessorSelected($, 'paypal');;
+  var isPaypal = ContribJS.isSingleType($, 'paypal') || ContribJS.isProcessorSelected($, 'paypal');
   $('#crm-main-content-wrapper').toggleClass('paypal', isPaypal);
   if (isPaypal) {
     $('#crm-submit-buttons').hide();
