@@ -48,7 +48,7 @@ ContribJS = {
 
   isSingleType: function($, paymentName) {
     $pp = this.paymentProcessors($);
-    return $pp.attr('type') == 'hidden' && $pp.val() == this.ppIds[paymentName];
+    return $pp.attr('type') == 'hidden' && ($pp.val() == this.ppIds[paymentName] || $pp.val() == this.testppIds[paymentName]);
   },
 
   setCountry: function($, ctryId) {
